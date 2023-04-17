@@ -1,0 +1,15 @@
+<template>
+    <ElRow :gutter="12">
+        <ElCol :span="24">
+            <ThePageTitle title="Category.Manager" />
+        </ElCol>
+
+        <ElCol :span="24">
+            <LazyCategorySearchForm />
+        </ElCol>
+
+        <ElCol :span="24">
+            <LazyCategoryDataList />
+        </ElCol>
+    </ElRow>
+</template>
