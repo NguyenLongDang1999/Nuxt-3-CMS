@@ -32,12 +32,16 @@ const handleCreate = () => {
 </script>
 
 <template>
-    <ElForm @submit.prevent>
-        <ElDialog
-            :model-value="modelValue"
-            :title="$t('Category.Create')"
-            width="30%"
-            @update:model-value="emits('update:modelValue', false)"
+    <ElDialog
+        :model-value="modelValue"
+        :title="$t('Category.Create')"
+        class="max-[767.99px]:min-w-[90%]"
+        @update:model-value="emits('update:modelValue', false)"
+    >
+        <ElForm
+            ref="formRef"
+            :model="form"
+            @submit.prevent
         >
             <ElRow :gutter="12">
                 <ElCol :md="24">
@@ -118,21 +122,27 @@ const handleCreate = () => {
                         title="Meta.Description"
                     />
                 </ElCol>
+
+                <ElCol :md="24">
+                    <ElDivider />
+                </ElCol>
             </ElRow>
 
-            <template #footer>
-                <ElButton @click="emits('update:modelValue', false)">
-                    {{ $t('Btn.Cancel') }}
-                </ElButton>
+            <ElRow>
+                <ElCol :span="24">
+                    <ElButton
+                        type="primary"
+                        native-type="submit"
+                        @click="handleCreate"
+                    >
+                        {{ $t('Btn.Save') }}
+                    </ElButton>
 
-                <ElButton
-                    type="primary"
-                    native-type="submit"
-                    @click="handleCreate"
-                >
-                    {{ $t('Btn.Save') }}
-                </ElButton>
-            </template>
-        </ElDialog>
-    </ElForm>
+                    <ElButton @click="emits('update:modelValue', false)">
+                        {{ $t('Btn.Cancel') }}
+                    </ElButton>
+                </ElCol>
+            </ElRow>
+        </ElForm>
+    </ElDialog>
 </template>
