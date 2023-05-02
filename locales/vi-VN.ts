@@ -39,6 +39,11 @@ export default {
         Keyword: 'Meta Keyword',
         Description: 'Meta Description'
     },
+    User: {
+        Information: 'Thông tin cá nhân',
+        ChangePassword: 'Đổi mật khẩu',
+        Logout: 'Đăng xuất'
+    },
     Description: 'Mô tả',
     Search: 'Tìm kiếm thông tin',
     Created_at: 'Ngày tạo',

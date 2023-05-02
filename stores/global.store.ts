@@ -10,11 +10,10 @@ export const useGlobalStore = defineStore({
         breadcrumbIcon: true,
         tabs: true,
         tabsIcon: true
-    })
-
-    // actions: {
-    //     setGlobalState(...args: ObjToKeyValArray<GlobalState>) {
-    //         this.$patch({ [args[0]]: args[1] })
-    //     }
-    // }
+    }),
+    actions: {
+        setGlobalState(...args: ObjToKeyValArray<IGlobalState>) {
+            this.$patch({ [args[0]]: args[1] })
+        }
+    }
 })

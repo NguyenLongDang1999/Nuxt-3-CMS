@@ -21,7 +21,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
         <ElAside
             w="!auto"
             bg="white"
-            border="r-1px solid border-#e4e7ed"
+            border="r-1px solid gray-200"
         >
             <div
                 display="flex"
@@ -61,7 +61,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
                         unique-opened
                         w="full"
                         overflow="x-hidden"
-                        border="none"
+                        border="!none"
                     >
                         <TheMenu :menu-list="menuList" />
                     </ElMenu>
@@ -70,11 +70,17 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
         </ElAside>
 
         <ElContainer>
-            <ElHeader>
-                <!--
-                  <ToolBarLeft />
-                  <ToolBarRight />
-                -->
+            <ElHeader
+                display="flex"
+                align="items-center"
+                justify="between"
+                h="55px"
+                p="y-0 x-15px"
+                bg="white"
+                border="b-1px solid gray-200"
+            >
+                <TheHeaderLeft />
+                <TheHeaderRight />
             </ElHeader>
 
             <!-- <Main /> -->

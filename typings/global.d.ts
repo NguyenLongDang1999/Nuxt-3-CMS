@@ -36,3 +36,8 @@ declare namespace File {
 
     type ExcelMimeType = "application/vnd.ms-excel" | "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 }
+
+/* Generic Tools */
+type ObjToKeyValArray<T> = {
+    [K in keyof T]: [K, T[K]];
+  }[keyof T];
