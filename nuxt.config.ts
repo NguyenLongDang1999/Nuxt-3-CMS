@@ -3,11 +3,11 @@ export default defineNuxtConfig({
     modules: [
         '@element-plus/nuxt',
         '@nuxt/devtools',
-        '@nuxtjs/tailwindcss',
         '@nuxt/image-edge',
         '@nuxtjs/google-fonts',
-        '@vueuse/nuxt',
         '@nuxtjs/i18n',
+        '@vueuse/nuxt',
+        'nuxt-windicss',
         'nuxt-lodash',
         'nuxt-icon',
         [
@@ -52,15 +52,6 @@ export default defineNuxtConfig({
         preconnect: true,
         families: {
             'IBM Plex Sans': [100, 200, 300, 400, 500, 600, 700, 800, 900]
-        }
-    },
-    vite: {
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    additionalData: '@use "@/assets/theme/index.scss" as *;'
-                }
-            }
         }
     },
     components: [

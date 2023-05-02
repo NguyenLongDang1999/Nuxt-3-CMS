@@ -1,42 +1,89 @@
 <script setup lang="ts">
 
-// ** useHooks
-const { sidebar, settings } = useBasicStore()
+// ** Utils Imports
+import { constantRoutes } from '~~/utils/navigations'
+
+// ** useHook
+const route = useRoute()
+const globalStore = useGlobalStore()
 
 // ** Computed
-const classSidebar = computed(() => {
-    return {
-        closeSidebar: !sidebar.opened,
-        hideSidebar: !settings.showLeftMenu
-    }
-})
-
-resizeHandler()
+const menuList = computed(() => constantRoutes)
+const isCollapse = computed(() => globalStore.isCollapse)
+const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu : route.path) as string)
 </script>
 
 <template>
-    <div :class="classSidebar">
-        <LazyTheSidebar
-            v-if="settings.showLeftMenu"
-            class="bg-[#304156] h-full fixed text-[0] top-0 bottom-0 left-0 z-[1001] overflow-hidden border-r-[0.5px] border-r-solid border-[#eee] !w-[210px] transition-[width] duration-200"
-            :class="{
-                '!w-[54px]': !sidebar.opened,
-                '!w-0': !settings.showLeftMenu
-            }"
-        />
-
-        <div
-            class="relative min-h-full ml-[210px] transition-[margin-left] duration-200"
-            :class="{
-                '!ml-[54px]': !sidebar.opened,
-                '!ml-0': !settings.showLeftMenu
-            }"
+    <ElContainer
+        h="100vh"
+        w="full"
+    >
+        <ElAside
+            w="!auto"
+            bg="white"
+            border="r-1px solid border-#e4e7ed"
         >
-            <LazyAppNavbar v-if="settings.showTopNavbar" />
+            <div
+                display="flex"
+                flex="col"
+                h="full"
+                :w="isCollapse ? '65px' : '210px'"
+                transition="transition-[width] duration-300 ease"
+            >
+                <div
+                    box="border"
+                    h="55px"
+                    display="flex"
+                    justify="center"
+                    align="items-center"
+                >
+                    <NuxtImg
+                        w="7"
+                        m="r-6px"
+                        object="contain"
+                        src="https://admin.spicyboy.cn/assets/svg/logo-7e7c7361.svg"
+                        alt="Logo"
+                    />
 
-            <div class="relative overflow-hidden bg-white p-2.5 pt-[50px]">
-                <slot />
+                    <span
+                        v-show="!isCollapse"
+                        font="bold"
+                        text="21.5px space-nowrap text-[#303133]"
+                    >Geeker Admin</span>
+                </div>
+
+                <ElScrollbar>
+                    <ElMenu
+                        :default-active="activeMenu"
+                        :collapse="isCollapse"
+                        :router="false"
+                        :collapse-transition="false"
+                        unique-opened
+                        w="full"
+                        overflow="x-hidden"
+                        border="none"
+                    >
+                        <TheMenu :menu-list="menuList" />
+                    </ElMenu>
+                </ElScrollbar>
             </div>
-        </div>
-    </div>
+        </ElAside>
+
+        <ElContainer>
+            <ElHeader>
+                <!--
+                  <ToolBarLeft />
+                  <ToolBarRight />
+                -->
+            </ElHeader>
+
+            <!-- <Main /> -->
+        </ElContainer>
+    </ElContainer>
 </template>
+
+<style lang="scss">
+.el-scrollbar {
+    height: calc(100% - 55px);
+}
+</style>

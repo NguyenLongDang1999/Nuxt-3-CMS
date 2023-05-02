@@ -1,3 +1,12 @@
+export interface IGlobalState {
+    primary: string
+    isCollapse: boolean
+    breadcrumb: boolean
+    breadcrumbIcon: boolean
+    tabs: boolean
+    tabsIcon: boolean
+}
+
 export interface IAggregations {
     aggregations: number
 }
@@ -22,3 +31,4 @@ export interface ICategoryList {
 export interface ITableColumn<T> {
     row: T
 }
+
