@@ -15,5 +15,8 @@ export const useGlobalStore = defineStore({
         setGlobalState(...args: ObjToKeyValArray<IGlobalState>) {
             this.$patch({ [args[0]]: args[1] })
         }
+    },
+    persist: {
+        storage: persistedState.localStorage
     }
 })

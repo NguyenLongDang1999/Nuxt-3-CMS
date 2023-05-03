@@ -14,7 +14,8 @@ export default defineNuxtConfig({
             '@pinia/nuxt', {
                 autoImports: ['defineStore', 'storeToRefs']
             }
-        ]
+        ],
+        '@pinia-plugin-persistedstate/nuxt'
     ],
     ssr: false,
     i18n: {

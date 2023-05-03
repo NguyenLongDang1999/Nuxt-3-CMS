@@ -16,7 +16,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
 <template>
     <ElContainer
         h="100vh"
-        w="full"
+        w="full !min-730px"
     >
         <ElAside
             w="!auto"
@@ -83,7 +83,7 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
                 <TheHeaderRight />
             </ElHeader>
 
-            <!-- <Main /> -->
+            <slot />
         </ElContainer>
     </ElContainer>
 </template>

@@ -24,7 +24,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
         },
         children: [
             {
-                path: 'category',
+                path: '/product/category',
                 name: 'Category',
                 meta: {
                     isAffix: false,
