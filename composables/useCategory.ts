@@ -1,17 +1,19 @@
 // ** Third Party Imports
-import { useQuery } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 
 // ** Configs Imports
 import { _fetcher } from '~/configs/fetcher'
 
 // ** Types Imports
-import type { ICategorySearch, ICategoryTable } from '~/types/category.type'
+import type { ICategoryFormInput, ICategorySearch, ICategoryTable } from '~/types/category.type'
 import type { ICategoryList } from '~/types/core.type'
 
 // ** State
 const path = ref<string>(ROUTE.CATEGORY)
 
 const search = reactive<ICategorySearch>({
+    page: PAGE.CURRENT,
+    pageSize: PAGE.SIZE,
     name: undefined,
     parent_id: undefined,
     status: undefined,
@@ -42,7 +44,8 @@ export const useCategoryTable = (params?: ICategorySearch) => {
     // ** Hooks
     const { data, isLoading } = useQuery<ICategoryTable>({
         queryKey: ['categoryTable', params],
-        queryFn: () => _fetcher(`${path.value}`, { params })
+        queryFn: () => _fetcher(`${path.value}`, { params }),
+        keepPreviousData: true
     })
 
     // ** Computed
@@ -53,5 +56,46 @@ export const useCategoryTable = (params?: ICategorySearch) => {
         isLoading,
         categoryTable,
         categoryAggregations
+    }
+}
+
+export const useCategoryFormInput = (imageURL?: File, id?: string) => {
+    // ** Hooks
+    const { t } = useI18n()
+    const queryClient = useQueryClient()
+
+    const { isLoading, mutateAsync: createCategory } = useMutation(
+        (body: ICategoryFormInput) => {
+            body.slug = slugify(body.name)
+
+            if (imageURL) {
+                body.image_uri = body.slug + '.' + getExtensionFile(imageURL.name)
+            }
+
+            return id ?
+                _fetcher(`${path.value}/${id}`, { method: 'PATCH', body }) :
+                _fetcher(`${path.value}`, { method: 'POST', body })
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ['categoryList'] })
+                queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
+
+                ElNotification({
+                    title: t('Message.Title.Success'),
+                    message: t('Message.Success'),
+                    type: MESSAGE.SUCCESS
+                })
+            },
+            onError: () => ElNotification({
+                title: t('Message.Title.Error'),
+                message: t('Message.Error'),
+                type: MESSAGE.ERROR
+            })
+        })
+
+    return {
+        isLoading,
+        createCategory
     }
 }

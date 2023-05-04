@@ -1,6 +1,10 @@
 <script setup lang="ts">
 
+// ** Validations Imports
+import CategoryValidate from '~~/validations/category.validate'
+
 // ** Types Imports
+import type { FormInstance } from 'element-plus'
 import type { ICategoryFormInput } from '~/types/category.type'
 
 // ** Props & Emits
@@ -18,16 +22,36 @@ const emits = defineEmits<Emits>()
 
 // ** useHooks
 const { categoryList } = useCategoryList()
+const { isLoading, createCategory } = useCategoryFormInput()
 
 // ** Data
+const isUpload = ref<boolean>(false)
+const formRef = ref<FormInstance>()
+
 const form = reactive<ICategoryFormInput>({
     name: '',
     slug: ''
 })
 
 // ** Methods
-const handleCreate = () => {
-    console.log('Submitted form')
+const handleCreate = async (input?: FormInstance) => {
+    if (!input) return
+
+    await input.validate(async valid => {
+        if (valid) {
+            await createCategory(form)
+            isUpload.value = true
+            resetForm(input)
+            closeDialog()
+        }
+    })
+}
+
+const closeDialog = () => emits('update:modelValue', false)
+
+const resetForm = (input?: FormInstance) => {
+    if (!input) return
+    input.resetFields()
 }
 </script>
 
@@ -36,16 +60,20 @@ const handleCreate = () => {
         :model-value="modelValue"
         :title="$t('Category.Create')"
         class="max-[767.99px]:min-w-[90%]"
-        @update:model-value="emits('update:modelValue', false)"
+        @update:model-value="closeDialog"
     >
         <ElForm
             ref="formRef"
             :model="form"
+            :rules="CategoryValidate"
             @submit.prevent
         >
             <ElRow :gutter="12">
                 <ElCol :md="24">
-                    <FormUpload />
+                    <FormUpload
+                        :name="ROUTE.CATEGORY"
+                        :is-upload="isUpload"
+                    />
                 </ElCol>
 
                 <ElCol :md="24">
@@ -131,14 +159,18 @@ const handleCreate = () => {
             <ElRow>
                 <ElCol :span="24">
                     <ElButton
+                        :loading="isLoading"
                         type="primary"
                         native-type="submit"
-                        @click="handleCreate"
+                        @click="handleCreate(formRef)"
                     >
                         {{ $t('Btn.Save') }}
                     </ElButton>
 
-                    <ElButton @click="emits('update:modelValue', false)">
+                    <ElButton
+                        :loading="isLoading"
+                        @click="closeDialog"
+                    >
                         {{ $t('Btn.Cancel') }}
                     </ElButton>
                 </ElCol>

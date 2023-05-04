@@ -44,6 +44,14 @@ export default {
         ChangePassword: 'Đổi mật khẩu',
         Logout: 'Đăng xuất'
     },
+    Message: {
+        Title: {
+            Success: 'Thành Công!',
+            Error: 'Thất Bại!'
+        },
+        Success: 'Dữ liệu đã được lưu lại thành công!',
+        Error: 'Thao tác thất bại! Vui lòng kiểm tra lại.'
+    },
     Description: 'Mô tả',
     Search: 'Tìm kiếm thông tin',
     Created_at: 'Ngày tạo',

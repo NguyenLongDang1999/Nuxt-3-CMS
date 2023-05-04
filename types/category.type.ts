@@ -1,5 +1,5 @@
 // ** Types Imports
-import type { IAggregations, ICategoryList } from './core.type'
+import type { IAggregations, ICategoryList, IPagination } from './core.type'
 
 export interface ICategoryFormInput {
     id?: string
@@ -15,7 +15,7 @@ export interface ICategoryFormInput {
     meta_description?: string
 }
 
-export interface ICategorySearch {
+export interface ICategorySearch extends IPagination {
     name?: string
     parent_id?: string
     status?: string

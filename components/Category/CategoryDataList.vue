@@ -42,10 +42,44 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                 >
                     <ElTableColumn
                         :label="$t('Category.Name')"
-                        min-width="180px"
+                        min-width="250px"
                     >
                         <template #default="scope: ITableColumn<ICategory>">
-                            {{ scope.row.name }}
+                            <div
+                                display="flex"
+                                align="items-center"
+                                grid="gap-3"
+                            >
+                                <ElAvatar
+                                    fit="cover"
+                                    :size="30"
+                                    :src="scope.row.image_uri"
+                                />
+
+                                <span text="capitalize">{{ scope.row.name }}</span>
+                            </div>
+                        </template>
+                    </ElTableColumn>
+
+                    <ElTableColumn
+                        :label="$t('Category.Parent')"
+                        min-width="250px"
+                    >
+                        <template #default="scope: ITableColumn<ICategory>">
+                            <div
+                                v-if="scope.row.parentCategory"
+                                display="flex"
+                                align="items-center"
+                                grid="gap-3"
+                            >
+                                <ElAvatar
+                                    fit="cover"
+                                    :size="30"
+                                    :src="scope.row.parentCategory.image_uri"
+                                />
+
+                                <span text="capitalize">{{ scope.row.parentCategory.name }}</span>
+                            </div>
                         </template>
                     </ElTableColumn>
 
@@ -73,7 +107,9 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                 <ElPagination
                     background
                     layout="prev, pager, next"
+                    :page-size="search.pageSize"
                     :total="categoryAggregations"
+                    @current-change="val => search.page = val"
                 />
             </ElCol>
         </ElRow>

@@ -7,6 +7,11 @@ export interface IGlobalState {
     tabsIcon: boolean
 }
 
+export interface IPagination {
+    page: number
+    pageSize: number
+}
+
 export interface IAggregations {
     aggregations: number
 }

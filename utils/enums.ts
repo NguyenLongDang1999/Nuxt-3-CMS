@@ -15,3 +15,13 @@ export enum ROUTE {
 export enum FORMAT {
     DATE_TIME = 'DD-MM-YYYY HH:mm'
 }
+
+export enum MESSAGE {
+    SUCCESS = 'success',
+    ERROR = 'error'
+}
+
+export enum PAGE {
+    CURRENT = 1,
+    SIZE = 10
+}
