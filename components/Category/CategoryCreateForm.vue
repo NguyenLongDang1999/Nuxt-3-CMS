@@ -68,7 +68,10 @@ const resetForm = (input?: FormInstance) => {
             :rules="CategoryValidate"
             @submit.prevent
         >
-            <ElRow :gutter="12">
+            <ElRow
+                :gutter="12"
+                grid="gap-y-3"
+            >
                 <ElCol :md="24">
                     <FormUpload
                         :name="ROUTE.CATEGORY"
@@ -156,7 +159,7 @@ const resetForm = (input?: FormInstance) => {
                 </ElCol>
             </ElRow>
 
-            <ElRow>
+            <ElRow grid="gap-y-3">
                 <ElCol :span="24">
                     <ElButton
                         :loading="isLoading"

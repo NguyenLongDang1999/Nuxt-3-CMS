@@ -36,7 +36,10 @@ const handleReset = (formEl?: FormInstance) => {
                 </h5>
             </template>
 
-            <ElRow :gutter="12">
+            <ElRow
+                :gutter="12"
+                grid="gap-y-3"
+            >
                 <ElCol
                     :md="6"
                     :sm="12"

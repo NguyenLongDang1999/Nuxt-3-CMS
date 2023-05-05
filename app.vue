@@ -38,10 +38,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss">
-.el-row {
-    row-gap: 12px;
-}
-
 .page-leave-active,
 .page-enter-active {
   transition: all 0.2s;
