@@ -17,7 +17,8 @@ export default {
         Save: 'Lưu Lại',
         Cancel: 'Hủy Bỏ',
         Search: 'Tìm Kiếm',
-        Reset: 'Làm Mới'
+        Reset: 'Làm Mới',
+        Back: 'Quay Lại'
     },
     Status: {
         Name: 'Trạng thái',
@@ -52,6 +53,7 @@ export default {
         Success: 'Dữ liệu đã được lưu lại thành công!',
         Error: 'Thao tác thất bại! Vui lòng kiểm tra lại.'
     },
+    Action: 'Hành động',
     Description: 'Mô tả',
     Search: 'Tìm kiếm thông tin',
     Created_at: 'Ngày tạo',

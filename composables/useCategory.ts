@@ -62,12 +62,24 @@ export const useCategoryTable = (params?: ICategorySearch) => {
     }
 }
 
+export const useCategoryDetail = (id: string) => {
+    // ** Hooks
+    const { data } = useQuery<ICategoryFormInput>({
+        queryKey: ['categoryDetail', id],
+        queryFn: () => _fetcher(`${path.value}/${id}`)
+    })
+
+    return {
+        category: data
+    }
+}
+
 export const useCategoryFormInput = (id?: string) => {
     // ** Hooks
     const { t } = useI18n()
     const queryClient = useQueryClient()
 
-    const { isLoading, mutateAsync: createCategory } = useMutation(
+    const { isLoading, mutateAsync: categoryFormInput } = useMutation(
         async (body: ICategoryFormInput) => {
             body.slug = slugify(body.name)
 
@@ -105,6 +117,6 @@ export const useCategoryFormInput = (id?: string) => {
 
     return {
         isLoading,
-        createCategory
+        categoryFormInput
     }
 }

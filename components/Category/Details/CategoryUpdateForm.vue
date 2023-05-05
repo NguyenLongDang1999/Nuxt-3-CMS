@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** Validations Imports
-import CategoryValidate from '~~/validations/category.validate'
+// import CategoryValidate from '~~/validations/category.validate'
 
 // ** Types Imports
 import type { FormInstance } from 'element-plus'
@@ -9,16 +9,10 @@ import type { ICategoryFormInput } from '~/types/category.type'
 
 // ** Props & Emits
 interface Props {
-    modelValue: boolean
+    id: string
 }
 
-interface Emits {
-    (event: 'update:modelValue', payload: boolean): void
-}
-
-defineProps<Props>()
-
-const emits = defineEmits<Emits>()
+const props = defineProps<Props>()
 
 // ** Data
 const formRef = ref<FormInstance>()
@@ -30,7 +24,14 @@ const form = reactive<ICategoryFormInput>({
 
 // ** useHooks
 const { categoryList } = useCategoryList()
-const { isLoading, categoryFormInput } = useCategoryFormInput()
+const { category } = useCategoryDetail(props.id)
+const { isLoading, categoryFormInput } = useCategoryFormInput(props.id)
+
+// ** Mounted
+onMounted(() => _assign(form, category.value))
+
+// ** Watch
+watch(category, val => _assign(form, val))
 
 // ** Methods
 const handleCreate = (input?: FormInstance) => {
@@ -39,31 +40,16 @@ const handleCreate = (input?: FormInstance) => {
     input.validate(async valid => {
         if (valid) {
             await categoryFormInput(form)
-            resetForm(input)
-            closeDialog()
         }
     })
-}
-
-const closeDialog = () => emits('update:modelValue', false)
-
-const resetForm = (input?: FormInstance) => {
-    if (!input) return
-    input.resetFields()
 }
 </script>
 
 <template>
-    <ElDialog
-        :model-value="modelValue"
-        :title="$t('Category.Create')"
-        class="max-[767.99px]:min-w-[90%]"
-        @update:model-value="closeDialog"
-    >
+    <div>
         <ElForm
             ref="formRef"
             :model="form"
-            :rules="CategoryValidate"
             @submit.prevent
         >
             <ElRow
@@ -165,14 +151,11 @@ const resetForm = (input?: FormInstance) => {
                         {{ $t('Btn.Save') }}
                     </ElButton>
 
-                    <ElButton
-                        :loading="isLoading"
-                        @click="closeDialog"
-                    >
-                        {{ $t('Btn.Cancel') }}
+                    <ElButton :loading="isLoading">
+                        {{ $t('Btn.Back') }}
                     </ElButton>
                 </ElCol>
             </ElRow>
         </ElForm>
-    </ElDialog>
+    </div>
 </template>

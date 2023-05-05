@@ -8,7 +8,7 @@ import type { ITableColumn } from '~/types/core.type'
 const createDialog = ref<boolean>(false)
 
 // ** useHooks
-const { search } = useCategory()
+const { search, path } = useCategory()
 const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(search)
 </script>
 
@@ -48,19 +48,24 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                         min-width="250px"
                     >
                         <template #default="scope: ITableColumn<ICategory>">
-                            <div
-                                display="flex"
-                                align="items-center"
-                                grid="gap-3"
+                            <NuxtLink
+                                :to="`/product/category/${scope.row.id}`"
+                                display="inline-block"
                             >
-                                <ElAvatar
-                                    fit="cover"
-                                    :size="40"
-                                    :src="getImageFile(ROUTE.CATEGORY, scope.row.image_uri)"
-                                />
+                                <div
+                                    display="flex"
+                                    align="items-center"
+                                    grid="gap-3"
+                                >
+                                    <ElAvatar
+                                        fit="cover"
+                                        :size="40"
+                                        :src="getImageFile(path, scope.row.image_uri)"
+                                    />
 
-                                <span text="capitalize">{{ scope.row.name }}</span>
-                            </div>
+                                    <span text="capitalize blue-600">{{ scope.row.name }}</span>
+                                </div>
+                            </NuxtLink>
                         </template>
                     </ElTableColumn>
 
@@ -69,20 +74,25 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                         min-width="250px"
                     >
                         <template #default="scope: ITableColumn<ICategory>">
-                            <div
+                            <NuxtLink
                                 v-if="scope.row.parentCategory"
-                                display="flex"
-                                align="items-center"
-                                grid="gap-3"
+                                :to="`/product/category/${scope.row.parentCategory.id}`"
+                                display="inline-block"
                             >
-                                <ElAvatar
-                                    fit="cover"
-                                    :size="40"
-                                    :src="getImageFile(ROUTE.CATEGORY, scope.row.parentCategory.image_uri)"
-                                />
+                                <div
+                                    display="flex"
+                                    align="items-center"
+                                    grid="gap-3"
+                                >
+                                    <ElAvatar
+                                        fit="cover"
+                                        :size="40"
+                                        :src="getImageFile(path, scope.row.parentCategory.image_uri)"
+                                    />
 
-                                <span text="capitalize">{{ scope.row.parentCategory.name }}</span>
-                            </div>
+                                    <span text="capitalize blue-600">{{ scope.row.parentCategory.name }}</span>
+                                </div>
+                            </NuxtLink>
                         </template>
                     </ElTableColumn>
 
@@ -101,6 +111,26 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                     >
                         <template #default="scope: ITableColumn<ICategory>">
                             {{ formatDateTime(scope.row.updated_at) }}
+                        </template>
+                    </ElTableColumn>
+
+                    <ElTableColumn
+                        :label="$t('Action')"
+                        width="110px"
+                    >
+                        <template #default="scope: ITableColumn<ICategory>">
+                            <ElButton
+                                circle
+                                type="warning"
+                                :icon="ElIconEdit"
+                                @click="$router.push({ path: `/product/category/${scope.row.id}` })"
+                            />
+
+                            <ElButton
+                                type="danger"
+                                :icon="ElIconDelete"
+                                circle
+                            />
                         </template>
                     </ElTableColumn>
                 </ElTable>
