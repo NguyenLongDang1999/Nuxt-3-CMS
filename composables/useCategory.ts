@@ -5,11 +5,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { _fetcher } from '~/configs/fetcher'
 
 // ** Types Imports
+import type { UploadFile, UploadRawFile } from 'element-plus'
 import type { ICategoryFormInput, ICategorySearch, ICategoryTable } from '~/types/category.type'
 import type { ICategoryList } from '~/types/core.type'
 
 // ** State
 const path = ref<string>(ROUTE.CATEGORY)
+const imageURL = ref<UploadFile>()
 
 const search = reactive<ICategorySearch>({
     page: PAGE.CURRENT,
@@ -23,7 +25,8 @@ const search = reactive<ICategorySearch>({
 export const useCategory = () => {
     return {
         path,
-        search
+        search,
+        imageURL
     }
 }
 
@@ -59,18 +62,24 @@ export const useCategoryTable = (params?: ICategorySearch) => {
     }
 }
 
-export const useCategoryFormInput = (imageURL?: File, id?: string) => {
+export const useCategoryFormInput = (id?: string) => {
     // ** Hooks
     const { t } = useI18n()
     const queryClient = useQueryClient()
 
     const { isLoading, mutateAsync: createCategory } = useMutation(
-        (body: ICategoryFormInput) => {
+        async (body: ICategoryFormInput) => {
             body.slug = slugify(body.name)
 
-            if (imageURL) {
-                body.image_uri = body.slug + '.' + getExtensionFile(imageURL.name)
+            if (!!imageURL.value) {
+                body.image_uri = body.slug + '.' + getExtensionFile(imageURL.value.name)
+
+                const uploadURL = `${path.value}/${body.image_uri}`
+
+                await useUploadFile(uploadURL, imageURL.value.raw as UploadRawFile)
             }
+
+            imageURL.value = undefined
 
             return id ?
                 _fetcher(`${path.value}/${id}`, { method: 'PATCH', body }) :

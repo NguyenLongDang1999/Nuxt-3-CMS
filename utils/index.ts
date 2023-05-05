@@ -1,3 +1,6 @@
+// ** Config Imports
+import { config } from '~/configs'
+
 // ** Types Imports
 import type { IOptions } from '~/types/core.type'
 
@@ -26,6 +29,8 @@ export const formatDateTime = (date: string) => {
 }
 
 export const getExtensionFile = (fileName: string) => fileName.split('.').pop()
+
+export const getImageFile = (path: string, name?: string) => name ? `${config.previewCDN}/${path}/${name}` : '/assets/default.jpg'
 
 export const slugify = (str: string) => {
     str = str.toLowerCase()

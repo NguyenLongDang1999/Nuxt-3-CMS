@@ -20,12 +20,7 @@ defineProps<Props>()
 
 const emits = defineEmits<Emits>()
 
-// ** useHooks
-const { categoryList } = useCategoryList()
-const { isLoading, createCategory } = useCategoryFormInput()
-
 // ** Data
-const isUpload = ref<boolean>(false)
 const formRef = ref<FormInstance>()
 
 const form = reactive<ICategoryFormInput>({
@@ -33,14 +28,17 @@ const form = reactive<ICategoryFormInput>({
     slug: ''
 })
 
+// ** useHooks
+const { categoryList } = useCategoryList()
+const { isLoading, createCategory } = useCategoryFormInput()
+
 // ** Methods
-const handleCreate = async (input?: FormInstance) => {
+const handleCreate = (input?: FormInstance) => {
     if (!input) return
 
-    await input.validate(async valid => {
+    input.validate(async valid => {
         if (valid) {
             await createCategory(form)
-            isUpload.value = true
             resetForm(input)
             closeDialog()
         }
@@ -73,10 +71,7 @@ const resetForm = (input?: FormInstance) => {
                 grid="gap-y-3"
             >
                 <ElCol :md="24">
-                    <FormUpload
-                        :name="ROUTE.CATEGORY"
-                        :is-upload="isUpload"
-                    />
+                    <FormUpload />
                 </ElCol>
 
                 <ElCol :md="24">

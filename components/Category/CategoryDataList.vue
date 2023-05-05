@@ -55,8 +55,8 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                             >
                                 <ElAvatar
                                     fit="cover"
-                                    :size="30"
-                                    :src="scope.row.image_uri"
+                                    :size="40"
+                                    :src="getImageFile(ROUTE.CATEGORY, scope.row.image_uri)"
                                 />
 
                                 <span text="capitalize">{{ scope.row.name }}</span>
@@ -77,8 +77,8 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                             >
                                 <ElAvatar
                                     fit="cover"
-                                    :size="30"
-                                    :src="scope.row.parentCategory.image_uri"
+                                    :size="40"
+                                    :src="getImageFile(ROUTE.CATEGORY, scope.row.parentCategory.image_uri)"
                                 />
 
                                 <span text="capitalize">{{ scope.row.parentCategory.name }}</span>
