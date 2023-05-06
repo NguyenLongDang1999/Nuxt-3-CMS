@@ -25,3 +25,7 @@ export enum PAGE {
     CURRENT = 1,
     SIZE = 10
 }
+
+export enum IMAGE {
+    DEFAULT = '/assets/default.jpg'
+}

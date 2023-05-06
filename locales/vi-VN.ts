@@ -1,6 +1,7 @@
 export default {
     Navigation: {
         Dashboard: 'Thống kê',
+        Product: 'Sản phẩm',
         Category: 'Danh mục'
     },
     Category: {
@@ -18,7 +19,8 @@ export default {
         Cancel: 'Hủy Bỏ',
         Search: 'Tìm Kiếm',
         Reset: 'Làm Mới',
-        Back: 'Quay Lại'
+        Back: 'Quay Lại',
+        OK: 'Đồng Ý'
     },
     Status: {
         Name: 'Trạng thái',
@@ -51,8 +53,11 @@ export default {
             Error: 'Thất Bại!'
         },
         Success: 'Dữ liệu đã được lưu lại thành công!',
-        Error: 'Thao tác thất bại! Vui lòng kiểm tra lại.'
+        Error: 'Thao tác thất bại! Vui lòng kiểm tra lại.',
+        Confirm: 'Thông Báo!',
+        Content: 'Bạn có chắc chắn muốn lưu lại dữ liệu này. Tiếp tục?'
     },
+    Information: 'Thông Tin Chi Tiết',
     Action: 'Hành động',
     Description: 'Mô tả',
     Search: 'Tìm kiếm thông tin',

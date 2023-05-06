@@ -7,7 +7,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
             isFull: false,
             isHide: false,
             isKeepAlive: true,
-            title: 'Dashboard',
+            title: 'Navigation.Dashboard',
             icon: 'ep:home-filled'
         }
     },
@@ -19,7 +19,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
             isFull: false,
             isHide: false,
             isKeepAlive: true,
-            title: 'Product',
+            title: 'Navigation.Product',
             icon: 'ep:shopping-cart'
         },
         children: [
@@ -31,7 +31,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
                     isFull: false,
                     isHide: true,
                     isKeepAlive: true,
-                    title: 'Category',
+                    title: 'Navigation.Category',
                     icon: 'tabler:category'
                 }
             }

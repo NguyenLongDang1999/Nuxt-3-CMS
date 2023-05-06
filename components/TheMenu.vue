@@ -40,9 +40,9 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
 
                 <span
                     overflow="hidden"
-                    text="space-nowrap text-ellipsis sm"
+                    text="space-nowrap text-ellipsis sm capitalize"
                 >
-                    {{ subItem.meta.title }}
+                    {{ $t(subItem.meta.title) }}
                 </span>
             </template>
 
@@ -70,9 +70,9 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
             <template #title>
                 <span
                     overflow="hidden"
-                    text="space-nowrap text-ellipsis sm"
+                    text="space-nowrap text-ellipsis sm capitalize"
                 >
-                    {{ subItem.meta.title }}
+                    {{ $t(subItem.meta.title) }}
                 </span>
             </template>
         </ElMenuItem>

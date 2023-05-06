@@ -29,6 +29,7 @@ const form = reactive<ICategoryFormInput>({
 })
 
 // ** useHooks
+const { t } = useI18n()
 const { categoryList } = useCategoryList()
 const { isLoading, categoryFormInput } = useCategoryFormInput()
 
@@ -36,11 +37,23 @@ const { isLoading, categoryFormInput } = useCategoryFormInput()
 const handleCreate = (input?: FormInstance) => {
     if (!input) return
 
-    input.validate(async valid => {
+    input.validate(valid => {
         if (valid) {
-            await categoryFormInput(form)
-            resetForm(input)
-            closeDialog()
+            ElMessageBox
+                .confirm(
+                    t('Message.Content'),
+                    t('Message.Confirm'),
+                    {
+                        confirmButtonText: t('Btn.OK'),
+                        cancelButtonText: t('Btn.Cancel'),
+                        type: 'warning'
+                    }
+                )
+                .then(async () => {
+                    await categoryFormInput(form)
+                    resetForm(input)
+                    closeDialog()
+                })
         }
     })
 }

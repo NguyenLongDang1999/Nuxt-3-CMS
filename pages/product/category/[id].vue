@@ -5,6 +5,9 @@ const route = useRoute()
 
 // ** Data
 const id = route.params.id as string
+
+// ** useHooks
+const { category } = useCategoryDetail(id)
 </script>
 
 <template>
@@ -13,9 +16,16 @@ const id = route.params.id as string
         grid="gap-y-3"
     >
         <ElCol :span="24">
+            <LazyThePageTitle :title="`${$t('Category.Update')}: ${category?.name}`" />
+        </ElCol>
+
+        <ElCol :span="24">
             <ElTabs type="border-card">
-                <ElTabPane :label="$t('Category.Update')">
-                    <LazyCategoryUpdateForm :id="id" />
+                <ElTabPane :label="$t('Information')">
+                    <CategoryUpdateForm
+                        :id="id"
+                        :category="category"
+                    />
                 </ElTabPane>
 
                 <ElTabPane label="Config">

@@ -25,6 +25,8 @@ export interface INavigation {
 export interface IOptions {
     id: string | number
     name: string
+    icon?: Component
+    class?: string
 }
 
 export interface ICategoryList {

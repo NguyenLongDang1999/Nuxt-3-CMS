@@ -1,14 +1,33 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { UploadInstance, UploadProps, UploadRawFile } from 'element-plus'
+import type { UploadInstance, UploadProps, UploadRawFile, UploadUserFile } from 'element-plus'
 import { genFileId } from 'element-plus'
+
+// ** Props & Emits
+interface Props {
+    name?: string
+    urlFile?: string
+}
+
+const props = defineProps<Props>()
 
 // ** useHooks
 const { imageURL } = useCategory()
 
 // ** Data
 const upload = ref<UploadInstance>()
+const fileList = ref<UploadUserFile[]>()
+
+// ** Watch
+watchEffect(() => {
+    if (props.name) {
+        fileList.value = [{
+            name: props.name as string,
+            url: props.urlFile
+        }]
+    }
+})
 
 // ** Methods
 const handleRemove = () => {
@@ -27,41 +46,40 @@ const handleExceed: UploadProps['onExceed'] = files => {
 </script>
 
 <template>
-    <div>
-        <ElUpload
-            ref="upload"
-            method="PUT"
-            list-type="picture-card"
-            :limit="1"
-            action=""
-            :auto-upload="false"
-            :on-exceed="handleExceed"
-            :on-change="file => imageURL = file"
-        >
-            <Icon
-                name="ep:plus"
-                class="text-xl"
-            />
+    <ElUpload
+        ref="upload"
+        :file-list="fileList"
+        method="PUT"
+        list-type="picture-card"
+        :limit="1"
+        action=""
+        :auto-upload="false"
+        :on-exceed="handleExceed"
+        :on-change="file => imageURL = file"
+    >
+        <Icon
+            name="ep:plus"
+            class="text-xl"
+        />
 
-            <template #file="{ file }">
-                <div>
-                    <img
-                        class="el-upload-list__item-thumbnail"
-                        :src="file.url"
+        <template #file="{ file }">
+            <div>
+                <img
+                    class="el-upload-list__item-thumbnail"
+                    :src="file.url"
+                >
+                <span class="el-upload-list__item-actions">
+                    <span
+                        class="el-upload-list__item-delete"
+                        @click="handleRemove"
                     >
-                    <span class="el-upload-list__item-actions">
-                        <span
-                            class="el-upload-list__item-delete"
-                            @click="handleRemove"
-                        >
-                            <Icon
-                                name="ep:delete"
-                                class="text-xl"
-                            />
-                        </span>
+                        <Icon
+                            name="ep:delete"
+                            class="text-xl"
+                        />
                     </span>
-                </div>
-            </template>
-        </ElUpload>
-    </div>
+                </span>
+            </div>
+        </template>
+    </ElUpload>
 </template>

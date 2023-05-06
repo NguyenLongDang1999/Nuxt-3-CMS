@@ -8,8 +8,26 @@ import type { ITableColumn } from '~/types/core.type'
 const createDialog = ref<boolean>(false)
 
 // ** useHooks
+const { t } = useI18n()
 const { search, path } = useCategory()
 const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(search)
+const { categoryDelete } = useCategoryDelete()
+
+
+// ** Methods
+const handleDelete = (id: string) => {
+    ElMessageBox
+        .confirm(
+            t('Message.Content'),
+            t('Message.Confirm'),
+            {
+                confirmButtonText: t('Btn.OK'),
+                cancelButtonText: t('Btn.Cancel'),
+                type: 'warning'
+            }
+        )
+        .then(() => categoryDelete(id))
+}
 </script>
 
 <template>
@@ -97,6 +115,32 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                     </ElTableColumn>
 
                     <ElTableColumn
+                        :label="$t('Status.Name')"
+                        width="100px"
+                        align="center"
+                    >
+                        <template #default="scope: ITableColumn<ICategory>">
+                            <Component
+                                :is="valueTransform(optionStatus(), scope.row.status)?.icon"
+                                :class="valueTransform(optionStatus(), scope.row.status)?.class"
+                            />
+                        </template>
+                    </ElTableColumn>
+
+                    <ElTableColumn
+                        :label="$t('Popular.Name')"
+                        width="100px"
+                        align="center"
+                    >
+                        <template #default="scope: ITableColumn<ICategory>">
+                            <Component
+                                :is="valueTransform(optionPopular(), scope.row.popular)?.icon"
+                                :class="valueTransform(optionPopular(), scope.row.popular)?.class"
+                            />
+                        </template>
+                    </ElTableColumn>
+
+                    <ElTableColumn
                         :label="$t('Created_at')"
                         width="180px"
                     >
@@ -127,9 +171,10 @@ const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(sear
                             />
 
                             <ElButton
+                                circle
                                 type="danger"
                                 :icon="ElIconDelete"
-                                circle
+                                @click="handleDelete(scope.row.id)"
                             />
                         </template>
                     </ElTableColumn>

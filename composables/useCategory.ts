@@ -69,8 +69,11 @@ export const useCategoryDetail = (id: string) => {
         queryFn: () => _fetcher(`${path.value}/${id}`)
     })
 
+    // ** Computed
+    const category = computed(() => data.value as ICategoryFormInput)
+
     return {
-        category: data
+        category
     }
 }
 
@@ -101,6 +104,7 @@ export const useCategoryFormInput = (id?: string) => {
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['categoryList'] })
                 queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
+                queryClient.invalidateQueries({ queryKey: ['categoryDetail', id] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -118,5 +122,35 @@ export const useCategoryFormInput = (id?: string) => {
     return {
         isLoading,
         categoryFormInput
+    }
+}
+
+export const useCategoryDelete = () => {
+    // ** Hooks
+    const { t } = useI18n()
+    const queryClient = useQueryClient()
+
+    const { mutateAsync: categoryDelete } = useMutation(
+        (id: string) => _fetcher(`${path.value}/delete/${id}`, { method: 'PATCH' }),
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries({ queryKey: ['categoryList'] })
+                queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
+
+                ElNotification({
+                    title: t('Message.Title.Success'),
+                    message: t('Message.Success'),
+                    type: MESSAGE.SUCCESS
+                })
+            },
+            onError: () => ElNotification({
+                title: t('Message.Title.Error'),
+                message: t('Message.Error'),
+                type: MESSAGE.ERROR
+            })
+        })
+
+    return {
+        categoryDelete
     }
 }

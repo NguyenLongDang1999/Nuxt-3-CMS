@@ -7,9 +7,13 @@ import type { IOptions } from '~/types/core.type'
 export const optionStatus = (): IOptions[] => {
     return [{
         id: STATUS.ACTIVE,
+        icon: ElIconCircleCheck,
+        class: 'text-blue-600 w-6 h-6',
         name: useI18n().t('Status.Active')
     }, {
         id: STATUS.INACTIVE,
+        icon: ElIconCircleClose,
+        class: 'text-red-600 w-6 h-6',
         name: useI18n().t('Status.Inactive')
     }]
 }
@@ -17,9 +21,13 @@ export const optionStatus = (): IOptions[] => {
 export const optionPopular = (): IOptions[] => {
     return [{
         id: POPULAR.ACTIVE,
+        icon: ElIconCircleCheck,
+        class: 'text-blue-600 w-6 h-6',
         name: useI18n().t('Popular.Active')
     }, {
         id: POPULAR.INACTIVE,
+        icon: ElIconCircleClose,
+        class: 'text-red-600 w-6 h-6',
         name: useI18n().t('Popular.Inactive')
     }]
 }
@@ -30,7 +38,9 @@ export const formatDateTime = (date: string) => {
 
 export const getExtensionFile = (fileName: string) => fileName.split('.').pop()
 
-export const getImageFile = (path: string, name?: string) => name ? `${config.previewCDN}/${path}/${name}` : '/assets/default.jpg'
+export const getImageFile = (path: string, name?: string) => name ? `${config.previewCDN}/${path}/${name}` : IMAGE.DEFAULT
+
+export const valueTransform = (dataList: IOptions[], value: string | number) => useArrayFind(dataList, val => val.id === value).value
 
 export const slugify = (str: string) => {
     str = str.toLowerCase()
