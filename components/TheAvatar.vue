@@ -1,3 +1,9 @@
+<script setup lang="ts">
+
+// ** useHooks
+const { refetch } = useAuthLogout()
+</script>
+
 <template>
     <ElDropdown trigger="click">
         <div
@@ -46,6 +52,7 @@
                     p="!y-2px !x-3"
                     font="!leading-5"
                     text="!xs capitalize"
+                    @click="refetch"
                 >
                     <Icon
                         name="ep:switch-button"

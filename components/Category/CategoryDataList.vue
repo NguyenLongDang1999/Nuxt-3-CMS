@@ -54,8 +54,8 @@ const handleDelete = (id: string) => {
         >
             <ElCol :span="24">
                 <ElTable
+                    v-loading="isLoading"
                     :data="categoryTable"
-                    :loading="isLoading"
                     :empty-text="$t('Empty.NoData')"
                     border
                     class="w-full"

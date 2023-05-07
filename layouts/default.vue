@@ -83,7 +83,13 @@ const activeMenu = computed(() => (route.meta.activeMenu ? route.meta.activeMenu
                 <TheHeaderRight />
             </ElHeader>
 
-            <slot />
+            <ElMain
+                p="!y-10px !x-3"
+                overflow="x-hidden"
+                bg="bg-[#f2f3f5]"
+            >
+                <slot />
+            </ElMain>
         </ElContainer>
     </ElContainer>
 </template>

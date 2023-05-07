@@ -9,6 +9,7 @@ export enum POPULAR {
 }
 
 export enum ROUTE {
+    AUTH = 'auth',
     CATEGORY = 'category'
 }
 
@@ -28,4 +29,9 @@ export enum PAGE {
 
 export enum IMAGE {
     DEFAULT = '/assets/default.jpg'
+}
+
+export enum AUTH {
+    TOKEN = 'accessToken',
+    USER_DATA = 'userData',
 }

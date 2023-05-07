@@ -75,6 +75,7 @@ const resetForm = (input?: FormInstance) => {
     >
         <ElForm
             ref="formRef"
+            v-loading="isLoading"
             :model="form"
             :rules="CategoryValidate"
             @submit.prevent
@@ -170,7 +171,6 @@ const resetForm = (input?: FormInstance) => {
             <ElRow grid="gap-y-3">
                 <ElCol :span="24">
                     <ElButton
-                        :loading="isLoading"
                         type="primary"
                         native-type="submit"
                         @click="handleCreate(formRef)"
@@ -178,10 +178,7 @@ const resetForm = (input?: FormInstance) => {
                         {{ $t('Btn.Save') }}
                     </ElButton>
 
-                    <ElButton
-                        :loading="isLoading"
-                        @click="closeDialog"
-                    >
+                    <ElButton @click="closeDialog">
                         {{ $t('Btn.Cancel') }}
                     </ElButton>
                 </ElCol>

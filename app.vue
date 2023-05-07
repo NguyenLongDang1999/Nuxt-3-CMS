@@ -26,14 +26,7 @@ onBeforeUnmount(() => {
 <template>
     <NuxtLayout>
         <NuxtLoadingIndicator />
-
-        <ElMain
-            p="!y-10px !x-3"
-            overflow="x-hidden"
-            bg="bg-[#f2f3f5]"
-        >
-            <NuxtPage />
-        </ElMain>
+        <NuxtPage />
     </NuxtLayout>
 </template>
 

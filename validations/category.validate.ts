@@ -1,5 +1,4 @@
 // ** Types Imports
-// import type { ICategoryFormInput } from '~/types/category.type'
 import type { FormRules } from 'element-plus'
 
 export default {

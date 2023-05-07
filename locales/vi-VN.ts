@@ -20,7 +20,9 @@ export default {
         Search: 'Tìm Kiếm',
         Reset: 'Làm Mới',
         Back: 'Quay Lại',
-        OK: 'Đồng Ý'
+        OK: 'Đồng Ý',
+        Login: 'Đăng Nhập',
+        Logout: 'Đăng Xuất'
     },
     Status: {
         Name: 'Trạng thái',
@@ -45,7 +47,9 @@ export default {
     User: {
         Information: 'Thông tin cá nhân',
         ChangePassword: 'Đổi mật khẩu',
-        Logout: 'Đăng xuất'
+        Logout: 'Đăng xuất',
+        Email: 'E-mail',
+        Password: 'Mật khẩu'
     },
     Message: {
         Title: {

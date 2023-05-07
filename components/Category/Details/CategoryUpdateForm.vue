@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** Validations Imports
-// import CategoryValidate from '~~/validations/category.validate'
+import CategoryValidate from '~~/validations/category.validate'
 
 // ** Types Imports
 import type { FormInstance } from 'element-plus'
@@ -26,8 +26,7 @@ const { categoryList } = useCategoryList()
 const { isLoading, categoryFormInput } = useCategoryFormInput(props.id)
 
 // ** Watch
-// _assign(form, props.category)
-watch(() => props.category, () => _assign(form, props.category), { deep: true })
+watch(() => props.category, () => _assign(form, props.category))
 
 // ** Methods
 const handleUpdate = (input?: FormInstance) => {
@@ -54,7 +53,9 @@ const handleUpdate = (input?: FormInstance) => {
 <template>
     <ElForm
         ref="formRef"
+        v-loading="isLoading"
         :model="form"
+        :rules="CategoryValidate"
         @submit.prevent
     >
         <ElRow
@@ -151,7 +152,6 @@ const handleUpdate = (input?: FormInstance) => {
         <ElRow grid="gap-y-3">
             <ElCol :span="24">
                 <ElButton
-                    :loading="isLoading"
                     type="primary"
                     native-type="submit"
                     @click="handleUpdate(formRef)"
@@ -159,10 +159,7 @@ const handleUpdate = (input?: FormInstance) => {
                     {{ $t('Btn.Save') }}
                 </ElButton>
 
-                <ElButton
-                    :loading="isLoading"
-                    @click="$router.go(-1)"
-                >
+                <ElButton @click="$router.go(-1)">
                     {{ $t('Btn.Back') }}
                 </ElButton>
             </ElCol>
