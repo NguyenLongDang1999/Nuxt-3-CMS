@@ -34,6 +34,18 @@ export const constantRoutes: Menu.MenuOptions[] = [
                     title: 'Navigation.Category',
                     icon: 'tabler:category'
                 }
+            },
+            {
+                path: '/product/brand',
+                name: 'Brand',
+                meta: {
+                    isAffix: false,
+                    isFull: false,
+                    isHide: true,
+                    isKeepAlive: true,
+                    title: 'Navigation.Brand',
+                    icon: 'tabler:trademark'
+                }
             }
         ]
     }

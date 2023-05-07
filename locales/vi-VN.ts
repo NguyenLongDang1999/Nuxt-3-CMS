@@ -2,14 +2,23 @@ export default {
     Navigation: {
         Dashboard: 'Thống kê',
         Product: 'Sản phẩm',
-        Category: 'Danh mục'
+        Category: 'Danh mục',
+        Brand: 'Thương hiệu'
     },
     Category: {
         Manager: 'Quản lý danh mục',
         Name: 'Tiêu đề danh mục',
         Parent: 'Danh mục cha',
         Create: 'Thêm Mới Danh Mục',
-        Update: 'Chỉnh Sửa Danh Mục'
+        Update: 'Chỉnh Sửa Danh Mục',
+        Index: 'Danh mục'
+    },
+    Brand: {
+        Manager: 'Quản lý thương hiệu',
+        Name: 'Tiêu đề thương hiệu',
+        Create: 'Thêm Mới Thương Hiệu',
+        Update: 'Chỉnh Sửa Thương Hiệu',
+        Index: 'Thương Hiệu'
     },
     Btn: {
         Create: 'Thêm Mới',

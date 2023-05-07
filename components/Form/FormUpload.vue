@@ -13,7 +13,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // ** useHooks
-const { imageURL } = useCategory()
+const { imageURL } = useUpload()
 
 // ** Data
 const upload = ref<UploadInstance>()

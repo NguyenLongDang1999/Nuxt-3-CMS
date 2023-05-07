@@ -10,7 +10,8 @@ export enum POPULAR {
 
 export enum ROUTE {
     AUTH = 'auth',
-    CATEGORY = 'category'
+    CATEGORY = 'category',
+    BRAND = 'brand',
 }
 
 export enum FORMAT {

@@ -6,80 +6,66 @@ import { _fetcher } from '~/configs/fetcher'
 
 // ** Types Imports
 import type { UploadRawFile } from 'element-plus'
-import type { ICategoryFormInput, ICategorySearch, ICategoryTable } from '~/types/category.type'
-import type { ICategoryList } from '~/types/core.type'
+import type { IBrandFormInput, IBrandSearch, IBrandTable } from '~/types/brand.type'
 
 // ** State
-const path = ref<string>(ROUTE.CATEGORY)
+const path = ref<string>(ROUTE.BRAND)
 
-const search = reactive<ICategorySearch>({
+const search = reactive<IBrandSearch>({
     page: PAGE.CURRENT,
     pageSize: PAGE.SIZE
 })
 
-export const useCategory = () => {
+export const useBrand = () => {
     return {
         path,
         search
     }
 }
 
-export const useCategoryList = () => {
+export const useBrandTable = (params?: IBrandSearch) => {
     // ** Hooks
-    const { data } = useQuery<ICategoryList[]>({
-        queryKey: ['categoryList'],
-        queryFn: () => _fetcher(`${path.value}/fetch-list`)
-    })
-
-    // ** Computed
-    const categoryList = computed(() => data.value || [])
-
-    return { categoryList }
-}
-
-export const useCategoryTable = (params?: ICategorySearch) => {
-    // ** Hooks
-    const { data, isLoading } = useQuery<ICategoryTable>({
-        queryKey: ['categoryTable', params],
+    const { data, isLoading } = useQuery<IBrandTable>({
+        queryKey: ['brandTable', params],
         queryFn: () => _fetcher(`${path.value}`, { params }),
         keepPreviousData: true
     })
 
     // ** Computed
-    const categoryTable = computed(() => data.value?.data || [])
-    const categoryAggregations = computed(() => data.value?.aggregations || 0)
+    const brandTable = computed(() => data.value?.data || [])
+    const brandAggregations = computed(() => data.value?.aggregations || 0)
 
     return {
         isLoading,
-        categoryTable,
-        categoryAggregations
+        brandTable,
+        brandAggregations
     }
 }
 
-export const useCategoryDetail = (id: string) => {
+export const useBrandDetail = (id: string) => {
     // ** Hooks
-    const { data, isLoading } = useQuery<ICategoryFormInput>({
-        queryKey: ['categoryDetail', id],
+    const { data, isLoading } = useQuery<IBrandFormInput>({
+        queryKey: ['brandDetail', id],
         queryFn: () => _fetcher(`${path.value}/${id}`)
     })
 
     // ** Computed
-    const category = computed(() => data.value as ICategoryFormInput)
+    const brand = computed(() => data.value as IBrandFormInput)
 
     return {
-        category,
+        brand,
         isLoading
     }
 }
 
-export const useCategoryFormInput = (id?: string) => {
+export const useBrandFormInput = (id?: string) => {
     // ** Hooks
     const { t } = useI18n()
     const { imageURL } = useUpload()
     const queryClient = useQueryClient()
 
-    const { isLoading, mutateAsync: categoryFormInput } = useMutation(
-        async (body: ICategoryFormInput) => {
+    const { isLoading, mutateAsync: brandFormInput } = useMutation(
+        async (body: IBrandFormInput) => {
             body.slug = slugify(body.name)
 
             if (!!imageURL.value) {
@@ -98,9 +84,9 @@ export const useCategoryFormInput = (id?: string) => {
         },
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['categoryList'] })
-                queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
-                queryClient.invalidateQueries({ queryKey: ['categoryDetail', id] })
+                queryClient.invalidateQueries({ queryKey: ['brandList'] })
+                queryClient.invalidateQueries({ queryKey: ['brandTable'] })
+                queryClient.invalidateQueries({ queryKey: ['brandDetail', id] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -117,21 +103,21 @@ export const useCategoryFormInput = (id?: string) => {
 
     return {
         isLoading,
-        categoryFormInput
+        brandFormInput
     }
 }
 
-export const useCategoryDelete = () => {
+export const useBrandDelete = () => {
     // ** Hooks
     const { t } = useI18n()
     const queryClient = useQueryClient()
 
-    const { mutateAsync: categoryDelete } = useMutation(
+    const { mutateAsync: brandDelete } = useMutation(
         (id: string) => _fetcher(`${path.value}/delete/${id}`, { method: 'PATCH' }),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['categoryList'] })
-                queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
+                queryClient.invalidateQueries({ queryKey: ['brandList'] })
+                queryClient.invalidateQueries({ queryKey: ['brandTable'] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -147,6 +133,6 @@ export const useCategoryDelete = () => {
         })
 
     return {
-        categoryDelete
+        brandDelete
     }
 }

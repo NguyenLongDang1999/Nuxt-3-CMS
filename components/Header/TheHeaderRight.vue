@@ -1,3 +1,8 @@
+<script setup lang="ts">
+const userData = JSON.parse(getUserData() || 'null')
+
+</script>
+
 <template>
     <div
         display="flex"
@@ -9,7 +14,7 @@
             text="15px"
             m="y-0 x-5"
         >
-            Administrator
+            {{ userData.name }}
         </span>
 
         <TheAvatar />

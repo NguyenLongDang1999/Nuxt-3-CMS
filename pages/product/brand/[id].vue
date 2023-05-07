@@ -7,7 +7,7 @@ const route = useRoute()
 const id = route.params.id as string
 
 // ** useHooks
-const { category, isLoading } = useCategoryDetail(id)
+const { brand, isLoading } = useBrandDetail(id)
 </script>
 
 <template>
@@ -16,7 +16,7 @@ const { category, isLoading } = useCategoryDetail(id)
         grid="gap-y-3"
     >
         <ElCol :span="24">
-            <LazyThePageTitle :title="`${$t('Category.Update')}: ${category?.name}`" />
+            <LazyThePageTitle :title="`${$t('Brand.Update')}: ${brand?.name}`" />
         </ElCol>
 
         <ElCol :span="24">
@@ -25,9 +25,9 @@ const { category, isLoading } = useCategoryDetail(id)
                     v-loading="isLoading"
                     :label="$t('Information')"
                 >
-                    <CategoryUpdateForm
+                    <BrandUpdateForm
                         :id="id"
-                        :category="category"
+                        :brand="brand"
                     />
                 </ElTabPane>
 

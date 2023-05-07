@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { ICategory } from '~/types/category.type'
+import type { IBrand } from '~/types/brand.type'
 import type { ITableColumn } from '~/types/core.type'
 
 // ** Data
@@ -9,9 +9,9 @@ const createDialog = ref<boolean>(false)
 
 // ** useHooks
 const { t } = useI18n()
-const { search, path } = useCategory()
-const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(search)
-const { categoryDelete } = useCategoryDelete()
+const { search, path } = useBrand()
+const { isLoading, brandTable, brandAggregations } = useBrandTable(search)
+const { brandDelete } = useBrandDelete()
 
 // ** Methods
 const handleDelete = (id: string) => {
@@ -25,7 +25,7 @@ const handleDelete = (id: string) => {
                 type: 'warning'
             }
         )
-        .then(() => categoryDelete(id))
+        .then(() => brandDelete(id))
 }
 </script>
 
@@ -34,7 +34,7 @@ const handleDelete = (id: string) => {
         <template #header>
             <div class="flex justify-between">
                 <h5 class="text-xl font-medium leading-none tracking-tight text-dark capitalize">
-                    {{ $t('Category.Manager') }}
+                    {{ $t('Brand.Manager') }}
                 </h5>
 
                 <ElButton
@@ -54,19 +54,19 @@ const handleDelete = (id: string) => {
             <ElCol :span="24">
                 <ElTable
                     v-loading="isLoading"
-                    :data="categoryTable"
+                    :data="brandTable"
                     :empty-text="$t('Empty.NoData')"
                     border
                     class="w-full"
                     header-cell-class-name="uppercase text-xs"
                 >
                     <ElTableColumn
-                        :label="$t('Category.Name')"
+                        :label="$t('Brand.Name')"
                         min-width="250px"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             <NuxtLink
-                                :to="`/product/category/${scope.row.id}`"
+                                :to="`/product/brand/${scope.row.id}`"
                                 display="inline-block"
                             >
                                 <div
@@ -87,13 +87,13 @@ const handleDelete = (id: string) => {
                     </ElTableColumn>
 
                     <ElTableColumn
-                        :label="$t('Category.Parent')"
+                        :label="$t('Category.Index')"
                         min-width="250px"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             <NuxtLink
-                                v-if="scope.row.parentCategory"
-                                :to="`/product/category/${scope.row.parentCategory.id}`"
+                                v-if="scope.row.Category"
+                                :to="`/product/category/${scope.row.Category.id}`"
                                 display="inline-block"
                             >
                                 <div
@@ -104,10 +104,10 @@ const handleDelete = (id: string) => {
                                     <ElAvatar
                                         fit="cover"
                                         :size="40"
-                                        :src="getImageFile(path, scope.row.parentCategory.image_uri)"
+                                        :src="getImageFile(path, scope.row.Category.image_uri)"
                                     />
 
-                                    <span text="capitalize blue-600">{{ scope.row.parentCategory.name }}</span>
+                                    <span text="capitalize blue-600">{{ scope.row.Category.name }}</span>
                                 </div>
                             </NuxtLink>
                         </template>
@@ -118,7 +118,7 @@ const handleDelete = (id: string) => {
                         width="100px"
                         align="center"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             <Component
                                 :is="valueTransform(optionStatus(), scope.row.status)?.icon"
                                 :class="valueTransform(optionStatus(), scope.row.status)?.class"
@@ -131,7 +131,7 @@ const handleDelete = (id: string) => {
                         width="100px"
                         align="center"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             <Component
                                 :is="valueTransform(optionPopular(), scope.row.popular)?.icon"
                                 :class="valueTransform(optionPopular(), scope.row.popular)?.class"
@@ -143,7 +143,7 @@ const handleDelete = (id: string) => {
                         :label="$t('Created_at')"
                         width="180px"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             {{ formatDateTime(scope.row.created_at) }}
                         </template>
                     </ElTableColumn>
@@ -152,7 +152,7 @@ const handleDelete = (id: string) => {
                         :label="$t('Updated_at')"
                         width="180px"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             {{ formatDateTime(scope.row.updated_at) }}
                         </template>
                     </ElTableColumn>
@@ -161,12 +161,12 @@ const handleDelete = (id: string) => {
                         :label="$t('Action')"
                         width="110px"
                     >
-                        <template #default="scope: ITableColumn<ICategory>">
+                        <template #default="scope: ITableColumn<IBrand>">
                             <ElButton
                                 circle
                                 type="warning"
                                 :icon="ElIconEdit"
-                                @click="$router.push({ path: `/product/category/${scope.row.id}` })"
+                                @click="$router.push({ path: `/product/brand/${scope.row.id}` })"
                             />
 
                             <ElButton
@@ -185,12 +185,12 @@ const handleDelete = (id: string) => {
                     background
                     layout="prev, pager, next"
                     :page-size="search.pageSize"
-                    :total="categoryAggregations"
+                    :total="brandAggregations"
                     @current-change="val => search.page = val"
                 />
             </ElCol>
         </ElRow>
 
-        <LazyCategoryCreateForm v-model="createDialog" />
+        <LazyBrandCreateForm v-model="createDialog" />
     </ElCard>
 </template>
