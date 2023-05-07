@@ -22,7 +22,7 @@ export const _fetcher = ofetch.create({
             options.headers.set('Authorization', `Bearer ${auth}`)
         }
     },
-    onResponseError: async ({ request, response, options }) => {
+    onResponseError: async ({ response }) => {
         if (
             response.status === 401 &&
             !isRefreshing
@@ -39,7 +39,8 @@ export const _fetcher = ofetch.create({
 
                 removeToken()
                 removeUserData()
-                router.push({ path: '/auth/login' })
+
+                router.push('/auth/login')
             }
         }
     }
