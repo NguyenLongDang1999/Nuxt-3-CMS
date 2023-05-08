@@ -49,7 +49,7 @@ export const useAuthLogout = () => {
             removeToken()
             removeUserData()
 
-            router.push('/auth/login')
+            router.push(ROUTER.LOGIN)
         }
     })
 

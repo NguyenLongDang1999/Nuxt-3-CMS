@@ -40,7 +40,7 @@ export const _fetcher = ofetch.create({
                 removeToken()
                 removeUserData()
 
-                router.push('/auth/login')
+                router.push(ROUTER.LOGIN)
             }
         }
     }

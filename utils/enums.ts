@@ -14,6 +14,14 @@ export enum ROUTE {
     BRAND = 'brand',
 }
 
+export enum ROUTER {
+    DASHBOARD = '/',
+    LOGIN = '/auth/login',
+    PRODUCT = '/product',
+    CATEGORY = '/product/category',
+    BRAND = '/product/brand',
+}
+
 export enum FORMAT {
     DATE_TIME = 'DD-MM-YYYY HH:mm'
 }

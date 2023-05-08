@@ -166,7 +166,7 @@ const handleDelete = (id: string) => {
                                 circle
                                 type="warning"
                                 :icon="ElIconEdit"
-                                @click="$router.push({ path: `/product/brand/${scope.row.id}` })"
+                                @click="navigateTo(`${ROUTER.BRAND}/${scope.row.id}`)"
                             />
 
                             <ElButton

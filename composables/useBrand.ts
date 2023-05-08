@@ -86,7 +86,7 @@ export const useBrandFormInput = (id?: string) => {
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['brandList'] })
                 queryClient.invalidateQueries({ queryKey: ['brandTable'] })
-                queryClient.invalidateQueries({ queryKey: ['brandDetail', id] })
+                if (id) queryClient.invalidateQueries({ queryKey: ['brandDetail', id] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),

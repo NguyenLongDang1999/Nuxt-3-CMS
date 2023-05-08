@@ -6,15 +6,6 @@ interface Props {
 }
 
 defineProps<Props>()
-
-// ** useHooks
-const router = useRouter()
-
-// ** Methods
-const handleClickMenu = (subItem: Menu.MenuOptions) => {
-    if (subItem.meta.isLink) return window.open(subItem.meta.isLink, '_blank')
-    router.push(subItem.path)
-}
 </script>
 
 <template>
@@ -54,7 +45,7 @@ const handleClickMenu = (subItem: Menu.MenuOptions) => {
             :index="subItem.path"
             display="flex"
             align="items-center"
-            @click="handleClickMenu(subItem)"
+            @click="navigateTo(subItem.path)"
         >
             <div
                 text="middle center lg"

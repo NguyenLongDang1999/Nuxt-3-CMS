@@ -100,7 +100,7 @@ export const useCategoryFormInput = (id?: string) => {
             onSuccess: () => {
                 queryClient.invalidateQueries({ queryKey: ['categoryList'] })
                 queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
-                queryClient.invalidateQueries({ queryKey: ['categoryDetail', id] })
+                if (id) queryClient.invalidateQueries({ queryKey: ['categoryDetail', id] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),

@@ -1,6 +1,6 @@
 export const constantRoutes: Menu.MenuOptions[] = [
     {
-        path: '/',
+        path: ROUTER.DASHBOARD,
         name: 'Dashboard',
         meta: {
             isAffix: true,
@@ -12,7 +12,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
         }
     },
     {
-        path: '/product',
+        path: ROUTER.PRODUCT,
         name: 'Product',
         meta: {
             isAffix: true,
@@ -24,7 +24,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
         },
         children: [
             {
-                path: '/product/category',
+                path: ROUTER.CATEGORY,
                 name: 'Category',
                 meta: {
                     isAffix: false,
@@ -36,7 +36,7 @@ export const constantRoutes: Menu.MenuOptions[] = [
                 }
             },
             {
-                path: '/product/brand',
+                path: ROUTER.BRAND,
                 name: 'Brand',
                 meta: {
                     isAffix: false,
