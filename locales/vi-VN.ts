@@ -21,6 +21,17 @@ export default {
         Update: 'Chỉnh Sửa Thương Hiệu',
         Index: 'Thương Hiệu'
     },
+    Attribute: {
+        Manager: 'Quản lý thuộc tính',
+        Name: 'Tiêu đề thuộc tính',
+        Create: 'Thêm Mới Thuộc Tính',
+        Update: 'Chỉnh Sửa Thuộc Tính',
+        Index: 'Thuộc Tính'
+    },
+    Variant: {
+        Add: 'Thêm thuộc tính',
+        Value: 'Giá trị thuộc tính'
+    },
     Btn: {
         Create: 'Thêm Mới',
         Update: 'Chỉnh Sửa',
