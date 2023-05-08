@@ -29,7 +29,7 @@ export default {
         Index: 'Thuộc Tính'
     },
     Variant: {
-        Add: 'Thêm thuộc tính',
+        Add: 'Thêm Thuộc Tính',
         Value: 'Giá trị thuộc tính'
     },
     Btn: {
