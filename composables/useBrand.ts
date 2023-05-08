@@ -23,11 +23,11 @@ export const useBrand = () => {
     }
 }
 
-export const useBrandTable = (params?: IBrandSearch) => {
+export const useBrandTable = () => {
     // ** Hooks
     const { data, isLoading } = useQuery<IBrandTable>({
-        queryKey: ['brandTable', params],
-        queryFn: () => _fetcher(`${path.value}`, { params }),
+        queryKey: ['brandTable', search],
+        queryFn: () => _fetcher(`${path.value}`, { params: search }),
         keepPreviousData: true
     })
 
@@ -84,8 +84,8 @@ export const useBrandFormInput = (id?: string) => {
         },
         {
             onSuccess: () => {
+                queryClient.refetchQueries({ queryKey: ['brandTable'] })
                 queryClient.invalidateQueries({ queryKey: ['brandList'] })
-                queryClient.invalidateQueries({ queryKey: ['brandTable'] })
                 if (id) queryClient.invalidateQueries({ queryKey: ['brandDetail', id] })
 
                 ElNotification({

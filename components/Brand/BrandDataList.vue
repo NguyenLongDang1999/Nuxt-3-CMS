@@ -10,7 +10,7 @@ const createDialog = ref<boolean>(false)
 // ** useHooks
 const { t } = useI18n()
 const { search, path } = useBrand()
-const { isLoading, brandTable, brandAggregations } = useBrandTable(search)
+const { isLoading, brandTable, brandAggregations } = useBrandTable()
 const { brandDelete } = useBrandDelete()
 
 // ** Methods

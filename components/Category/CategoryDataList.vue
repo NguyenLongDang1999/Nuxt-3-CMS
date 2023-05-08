@@ -10,7 +10,7 @@ const createDialog = ref<boolean>(false)
 // ** useHooks
 const { t } = useI18n()
 const { search, path } = useCategory()
-const { isLoading, categoryTable, categoryAggregations } = useCategoryTable(search)
+const { isLoading, categoryTable, categoryAggregations } = useCategoryTable()
 const { categoryDelete } = useCategoryDelete()
 
 // ** Methods

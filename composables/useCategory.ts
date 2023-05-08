@@ -37,11 +37,11 @@ export const useCategoryList = () => {
     return { categoryList }
 }
 
-export const useCategoryTable = (params?: ICategorySearch) => {
+export const useCategoryTable = () => {
     // ** Hooks
     const { data, isLoading } = useQuery<ICategoryTable>({
-        queryKey: ['categoryTable', params],
-        queryFn: () => _fetcher(`${path.value}`, { params }),
+        queryKey: ['categoryTable', search],
+        queryFn: () => _fetcher(`${path.value}`, { params: search }),
         keepPreviousData: true
     })
 
@@ -98,8 +98,8 @@ export const useCategoryFormInput = (id?: string) => {
         },
         {
             onSuccess: () => {
+                queryClient.refetchQueries({ queryKey: ['categoryTable'] })
                 queryClient.invalidateQueries({ queryKey: ['categoryList'] })
-                queryClient.invalidateQueries({ queryKey: ['categoryTable'] })
                 if (id) queryClient.invalidateQueries({ queryKey: ['categoryDetail', id] })
 
                 ElNotification({
