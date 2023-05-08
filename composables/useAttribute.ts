@@ -5,78 +5,66 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 import { _fetcher } from '~/configs/fetcher'
 
 // ** Types Imports
-import type { UploadRawFile } from 'element-plus'
-import type { IBrandFormInput, IBrandSearch, IBrandTable } from '~/types/brand.type'
+import type { IAttributeFormInput, IAttributeSearch, IAttributeTable } from '~/types/attribute.type'
 
 // ** State
-const path = ref<string>(ROUTE.BRAND)
+const path = ref<string>(ROUTE.ATTRIBUTE)
 
-const search = reactive<IBrandSearch>({
+const search = reactive<IAttributeSearch>({
     page: PAGE.CURRENT,
     pageSize: PAGE.SIZE
 })
 
-export const useBrand = () => {
+export const useAttribute = () => {
     return {
         path,
         search
     }
 }
 
-export const useBrandTable = () => {
+export const useAttributeTable = () => {
     // ** Hooks
-    const { data, isLoading } = useQuery<IBrandTable>({
-        queryKey: ['brandTable', search],
+    const { data, isLoading } = useQuery<IAttributeTable>({
+        queryKey: ['attributeTable', search],
         queryFn: () => _fetcher(`${path.value}`, { params: search }),
         keepPreviousData: true
     })
 
     // ** Computed
-    const brandTable = computed(() => data.value?.data || [])
-    const brandAggregations = computed(() => data.value?.aggregations || 0)
+    const attributeTable = computed(() => data.value?.data || [])
+    const attributeAggregations = computed(() => data.value?.aggregations || 0)
 
     return {
         isLoading,
-        brandTable,
-        brandAggregations
+        attributeTable,
+        attributeAggregations
     }
 }
 
-export const useBrandDetail = (id: string) => {
+export const useAttributeDetail = (id: string) => {
     // ** Hooks
-    const { data, isLoading } = useQuery<IBrandFormInput>({
-        queryKey: ['brandDetail', id],
+    const { data, isLoading } = useQuery<IAttributeFormInput>({
+        queryKey: ['attributeDetail', id],
         queryFn: () => _fetcher(`${path.value}/${id}`)
     })
 
     // ** Computed
-    const brand = computed(() => data.value as IBrandFormInput)
+    const attribute = computed(() => data.value as IAttributeFormInput)
 
     return {
-        brand,
+        attribute,
         isLoading
     }
 }
 
-export const useBrandFormInput = (id?: string) => {
+export const useAttributeFormInput = (id?: string) => {
     // ** Hooks
     const { t } = useI18n()
-    const { imageURL } = useUpload()
     const queryClient = useQueryClient()
 
-    const { isLoading, mutateAsync: brandFormInput } = useMutation(
-        async (body: IBrandFormInput) => {
+    const { isLoading, mutateAsync: attributeFormInput } = useMutation(
+        async (body: IAttributeFormInput) => {
             body.slug = slugify(body.name)
-
-            if (!!imageURL.value) {
-                body.image_uri = body.slug + '.' + getExtensionFile(imageURL.value.name)
-
-                const uploadURL = `${path.value}/${body.image_uri}`
-
-                await useUploadFile(uploadURL, imageURL.value.raw as UploadRawFile)
-            }
-
-            imageURL.value = undefined
 
             return id ?
                 _fetcher(`${path.value}/${id}`, { method: 'PATCH', body }) :
@@ -84,8 +72,8 @@ export const useBrandFormInput = (id?: string) => {
         },
         {
             onSuccess: () => {
-                queryClient.refetchQueries({ queryKey: ['brandTable'] })
-                if (id) queryClient.invalidateQueries({ queryKey: ['brandDetail', id] })
+                queryClient.refetchQueries({ queryKey: ['attributeTable'] })
+                if (id) queryClient.invalidateQueries({ queryKey: ['attributeDetail', id] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -102,20 +90,20 @@ export const useBrandFormInput = (id?: string) => {
 
     return {
         isLoading,
-        brandFormInput
+        attributeFormInput
     }
 }
 
-export const useBrandDelete = () => {
+export const useAttributeDelete = () => {
     // ** Hooks
     const { t } = useI18n()
     const queryClient = useQueryClient()
 
-    const { mutateAsync: brandDelete } = useMutation(
+    const { mutateAsync: attributeDelete } = useMutation(
         (id: string) => _fetcher(`${path.value}/delete/${id}`, { method: 'PATCH' }),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['brandTable'] })
+                queryClient.invalidateQueries({ queryKey: ['attributeTable'] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -131,6 +119,6 @@ export const useBrandDelete = () => {
         })
 
     return {
-        brandDelete
+        attributeDelete
     }
 }

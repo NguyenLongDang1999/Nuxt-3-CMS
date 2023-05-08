@@ -12,6 +12,7 @@ export enum ROUTE {
     AUTH = 'auth',
     CATEGORY = 'category',
     BRAND = 'brand',
+    ATTRIBUTE = 'attribute',
 }
 
 export enum ROUTER {
@@ -20,6 +21,7 @@ export enum ROUTER {
     PRODUCT = '/product',
     CATEGORY = '/product/category',
     BRAND = '/product/brand',
+    ATTRIBUTE = '/product/attribute',
 }
 
 export enum FORMAT {

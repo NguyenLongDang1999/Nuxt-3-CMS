@@ -3,7 +3,8 @@ export default {
         Dashboard: 'Thống kê',
         Product: 'Sản phẩm',
         Category: 'Danh mục',
-        Brand: 'Thương hiệu'
+        Brand: 'Thương hiệu',
+        Attribute: 'Thuộc tính'
     },
     Category: {
         Manager: 'Quản lý danh mục',

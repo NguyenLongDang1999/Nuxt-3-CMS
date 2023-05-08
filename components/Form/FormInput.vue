@@ -17,7 +17,10 @@ const emits = defineEmits<Emits>()
 </script>
 
 <template>
-    <ElFormItem :prop="name">
+    <ElFormItem
+        :prop="name"
+        :rules="$attrs.rules || []"
+    >
         <FormLabel
             :name="name"
             :title="title"

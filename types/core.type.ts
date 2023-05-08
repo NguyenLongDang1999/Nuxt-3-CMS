@@ -39,3 +39,7 @@ export interface ITableColumn<T> {
     row: T
 }
 
+export interface IVariantList {
+    name: string
+}
+

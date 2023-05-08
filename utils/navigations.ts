@@ -46,6 +46,18 @@ export const constantRoutes: Menu.MenuOptions[] = [
                     title: 'Navigation.Brand',
                     icon: 'tabler:trademark'
                 }
+            },
+            {
+                path: ROUTER.ATTRIBUTE,
+                name: 'Attribute',
+                meta: {
+                    isAffix: false,
+                    isFull: false,
+                    isHide: true,
+                    isKeepAlive: true,
+                    title: 'Navigation.Attribute',
+                    icon: 'ep:collection'
+                }
             }
         ]
     }
