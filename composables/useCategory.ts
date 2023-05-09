@@ -11,6 +11,7 @@ import type { ICategoryList } from '~/types/core.type'
 
 // ** State
 const path = ref<string>(ROUTE.CATEGORY)
+const category_id = ref<string>('')
 
 const search = reactive<ICategorySearch>({
     page: PAGE.CURRENT,
@@ -20,7 +21,8 @@ const search = reactive<ICategorySearch>({
 export const useCategory = () => {
     return {
         path,
-        search
+        search,
+        category_id
     }
 }
 

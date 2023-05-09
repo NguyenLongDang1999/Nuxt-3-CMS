@@ -94,6 +94,10 @@ export default {
         Confirm: 'Thông Báo!',
         Content: 'Bạn có chắc chắn muốn lưu lại dữ liệu này. Tiếp tục?'
     },
+    Discount: {
+        Price: 'Giảm theo số tiền',
+        Percent: 'Giảm theo phần trăm'
+    },
     Information: 'Thông Tin Chi Tiết',
     Action: 'Hành động',
     Short: 'Mô tả ngắn',

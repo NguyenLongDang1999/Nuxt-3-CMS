@@ -32,6 +32,16 @@ export const optionPopular = (): IOptions[] => {
     }]
 }
 
+export const optionTypeDiscount = (): IOptions[] => {
+    return [{
+        id: DISCOUNT.PRICE,
+        name: useI18n().t('Discount.Price')
+    }, {
+        id: DISCOUNT.PERCENT,
+        name: useI18n().t('Discount.Percent')
+    }]
+}
+
 export const formatDateTime = (date: string) => {
     return useDateFormat(date, FORMAT.DATE_TIME).value
 }

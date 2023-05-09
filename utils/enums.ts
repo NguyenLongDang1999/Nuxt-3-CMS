@@ -8,11 +8,17 @@ export enum POPULAR {
     INACTIVE = 2
 }
 
+export enum DISCOUNT {
+    PRICE = 1,
+    PERCENT = 2
+}
+
 export enum ROUTE {
     AUTH = 'auth',
     CATEGORY = 'category',
     BRAND = 'brand',
     ATTRIBUTE = 'attribute',
+    VARIANT = 'variant',
     PRODUCT = 'product',
 }
 

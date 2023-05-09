@@ -1,5 +1,5 @@
 // ** Types Imports
-import type { IAggregations, IBrandList, ICategoryList, IPagination } from './core.type'
+import type { IAggregations, IAttributeList, IBrandList, ICategoryList, IPagination } from './core.type'
 
 export interface IProductFormInput {
     id?: string
@@ -11,6 +11,8 @@ export interface IProductFormInput {
     price: number
     type_discount: number
     price_discount: number
+    attribute?: IAttributeList[]
+    variant: string[]
     status?: number
     popular?: number
     brand_id?: string

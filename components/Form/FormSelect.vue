@@ -7,8 +7,9 @@ import type { IOptions } from '~/types/core.type'
 interface Props {
     readonly name: string
     readonly title: string
-    modelValue?: string | number
+    modelValue?: string | number | unknown[]
     options?: IOptions[]
+    valueArr?: boolean
 }
 
 interface Emits {
@@ -37,13 +38,14 @@ const data = computed(() => props.options || [])
             :no-match-text="$t('Empty.NoMatchData')"
             clearable
             class="w-full"
+            v-bind="$attrs"
             @update:model-value="emits('update:modelValue', $event)"
         >
             <ElOption
                 v-for="item in data"
                 :key="item.id"
                 :label="item.name"
-                :value="item.id"
+                :value="valueArr ? { id: item.id, name: item.name } : item.id"
             />
         </ElSelect>
     </ElFormItem>

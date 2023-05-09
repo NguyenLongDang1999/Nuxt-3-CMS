@@ -25,10 +25,14 @@ export const useBrand = () => {
 }
 
 export const useBrandList = () => {
+    const { category_id } = useCategory()
+    const enabled = computed(() => !!category_id.value)
+
     // ** Hooks
     const { data } = useQuery<IBrandList[]>({
-        queryKey: ['brandList'],
-        queryFn: () => _fetcher(`${path.value}/fetch-list`)
+        queryKey: ['brandList', category_id],
+        queryFn: () => _fetcher(`${path.value}/fetch-list/${category_id.value}`),
+        enabled
     })
 
     // ** Computed

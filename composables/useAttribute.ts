@@ -6,9 +6,11 @@ import { _fetcher } from '~/configs/fetcher'
 
 // ** Types Imports
 import type { IAttributeFormInput, IAttributeSearch, IAttributeTable } from '~/types/attribute.type'
+import type { IAttributeList } from '~/types/core.type'
 
 // ** State
 const path = ref<string>(ROUTE.ATTRIBUTE)
+const attribute_id = ref<string[]>([])
 
 const search = reactive<IAttributeSearch>({
     page: PAGE.CURRENT,
@@ -18,8 +20,26 @@ const search = reactive<IAttributeSearch>({
 export const useAttribute = () => {
     return {
         path,
-        search
+        search,
+        attribute_id
     }
+}
+
+export const useAttributeList = () => {
+    const { category_id } = useCategory()
+    const enabled = computed(() => !!category_id.value)
+
+    // ** Hooks
+    const { data } = useQuery<IAttributeList[]>({
+        queryKey: ['attributeList', category_id],
+        queryFn: () => _fetcher(`${path.value}/fetch-list/${category_id.value}`),
+        enabled
+    })
+
+    // ** Computed
+    const attributeList = computed(() => data.value || [])
+
+    return { attributeList }
 }
 
 export const useAttributeTable = () => {

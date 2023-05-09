@@ -5,6 +5,7 @@ import ProductValidate from '~~/validations/product.validate'
 
 // ** Types Imports
 import type { FormInstance } from 'element-plus'
+import type { IAttributeList } from '~/types/core.type'
 import type { IProductFormInput } from '~/types/product.type'
 
 // ** Data
@@ -17,15 +18,29 @@ const form = reactive<IProductFormInput>({
     category_id: '',
     quantity: 0,
     price: 0,
-    type_discount: 0,
-    price_discount: 0
+    type_discount: DISCOUNT.PRICE,
+    price_discount: 0,
+    attribute: [],
+    variant: []
 })
 
 // ** useHooks
 const { t } = useI18n()
 const { brandList } = useBrandList()
+const { category_id } = useCategory()
+const { attribute_id } = useAttribute()
+const { variantList } = useVariantList()
 const { categoryList } = useCategoryList()
-const { isLoading, categoryFormInput } = useCategoryFormInput()
+const { attributeList } = useAttributeList()
+const { isLoading, productFormInput } = useProductFormInput()
+
+// ** Watch
+watch(() => form.category_id, val => {
+    category_id.value = val
+    form.variant = []
+    form.attribute = []
+    form.brand_id = undefined
+})
 
 // ** Methods
 const handleCreate = (input?: FormInstance) => {
@@ -43,9 +58,17 @@ const handleCreate = (input?: FormInstance) => {
                         type: 'warning'
                     }
                 )
-                .then(() => categoryFormInput(form))
+                .then(() => productFormInput(form))
         }
     })
+}
+
+const handleAttributeChange = (val: IAttributeList[]) => {
+    attribute_id.value = []
+
+    console.log(val)
+
+    return val.map(item => attribute_id.value.push(item.id))
 }
 </script>
 
@@ -143,7 +166,7 @@ const handleCreate = (input?: FormInstance) => {
                         v-model="form.type_discount"
                         name="type_discount"
                         title="Product.TypeDiscount"
-                        :options="optionPopular()"
+                        :options="optionTypeDiscount()"
                     />
                 </ElCol>
 
@@ -169,12 +192,10 @@ const handleCreate = (input?: FormInstance) => {
                 </ElCol>
 
                 <ElCol :md="24">
-                    <label
-                        :title="t('Content')"
-                        for="content"
+                    <FormLabel
                         name="content"
-                        class="uppercase font-normal inline-block text-xs mb-1"
-                    >{{ $t('Content') }}</label>
+                        title="Content"
+                    />
 
                     <QuillEditor
                         v-model:content="form.content"
@@ -183,6 +204,51 @@ const handleCreate = (input?: FormInstance) => {
                         toolbar="full"
                         h="!300px"
                     />
+                </ElCol>
+
+                <ElCol :md="24">
+                    <ElDivider />
+                </ElCol>
+
+                <ElCol :md="6">
+                    <FormSelect
+                        v-model="form.attribute"
+                        name="attribute_data"
+                        title="Attribute.Index"
+                        :options="attributeList"
+                        multiple
+                        value-arr
+                        value-key="id"
+                        @change="handleAttributeChange"
+                    />
+                </ElCol>
+
+                <ElCol :md="24">
+                    <ElRow
+                        v-for="(item, index) in form.attribute"
+                        :key="item.id"
+                        :gutter="12"
+                        grid="gap-y-3"
+                    >
+                        <ElCol :md="6">
+                            <FormInput
+                                :model-value="item.name"
+                                name="attribute_name"
+                                title="Attribute.Name"
+                                disabled
+                            />
+                        </ElCol>
+
+                        <ElCol :md="6">
+                            <FormSelect
+                                v-model="form.variant[index]"
+                                name="attribute_data"
+                                title="Variant.Value"
+                                multiple
+                                :options="variantList[index].data"
+                            />
+                        </ElCol>
+                    </ElRow>
                 </ElCol>
 
                 <ElCol :md="24">
