@@ -32,6 +32,18 @@ export default {
         Add: 'Thêm Thuộc Tính',
         Value: 'Giá trị thuộc tính'
     },
+    Product: {
+        Manager: 'Quản lý sản phẩm',
+        Name: 'Tiêu đề sản phẩm',
+        Create: 'Thêm Mới Sản Phẩm',
+        Update: 'Chỉnh Sửa Sản Phẩm',
+        Index: 'Sản Phẩm',
+        Price: 'Giá tiền',
+        TypeDiscount: 'Loại giảm giá',
+        PriceDiscount: 'Số tiền giảm giá',
+        Sku: 'Mã sản phẩm',
+        Quantity: 'Số lượng'
+    },
     Btn: {
         Create: 'Thêm Mới',
         Update: 'Chỉnh Sửa',
@@ -84,6 +96,8 @@ export default {
     },
     Information: 'Thông Tin Chi Tiết',
     Action: 'Hành động',
+    Short: 'Mô tả ngắn',
+    Content: 'Chi tiết sản phẩm',
     Description: 'Mô tả',
     Search: 'Tìm kiếm thông tin',
     Created_at: 'Ngày tạo',

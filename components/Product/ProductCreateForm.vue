@@ -169,6 +169,27 @@ const handleCreate = (input?: FormInstance) => {
                 </ElCol>
 
                 <ElCol :md="24">
+                    <label
+                        :title="t('Content')"
+                        for="content"
+                        name="content"
+                        class="uppercase font-normal inline-block text-xs mb-1"
+                    >{{ $t('Content') }}</label>
+
+                    <QuillEditor
+                        v-model:content="form.content"
+                        content-type="html"
+                        theme="snow"
+                        toolbar="full"
+                        h="!300px"
+                    />
+                </ElCol>
+
+                <ElCol :md="24">
+                    <ElDivider />
+                </ElCol>
+
+                <ElCol :md="24">
                     <FormInput
                         v-model="form.meta_title"
                         name="meta_title"
