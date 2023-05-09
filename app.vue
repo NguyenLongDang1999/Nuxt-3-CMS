@@ -21,6 +21,10 @@ window.addEventListener('resize', listeningWindow, false)
 onBeforeUnmount(() => {
     window.removeEventListener('resize', listeningWindow)
 })
+
+useHead({
+    titleTemplate: 'Store-Mee Administration'
+})
 </script>
 
 <template>
