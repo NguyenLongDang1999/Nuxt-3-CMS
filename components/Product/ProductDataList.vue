@@ -1,18 +1,19 @@
 <script setup lang="ts">
 
 // ** Types Imports
-import type { IBrand } from '~/types/brand.type'
 import type { ITableColumn } from '~/types/core.type'
+import type { IProduct } from '~/types/product.type'
 
 // ** Data
 const createDialog = ref<boolean>(false)
 
 // ** useHooks
 const { t } = useI18n()
-const { search, path } = useBrand()
+const { search, path } = useProduct()
+const { path: pathBrand } = useBrand()
 const { path: pathCategory } = useCategory()
-const { isLoading, brandTable, brandAggregations } = useBrandTable()
-const { brandDelete } = useBrandDelete()
+const { isLoading, productTable, productAggregations } = useProductTable()
+const { productDelete } = useProductDelete()
 
 // ** Methods
 const handleDelete = (id: string) => {
@@ -26,7 +27,7 @@ const handleDelete = (id: string) => {
                 type: 'warning'
             }
         )
-        .then(() => brandDelete(id))
+        .then(() => productDelete(id))
 }
 </script>
 
@@ -35,13 +36,13 @@ const handleDelete = (id: string) => {
         <template #header>
             <div class="flex justify-between">
                 <h5 class="text-xl font-medium leading-none tracking-tight text-dark capitalize">
-                    {{ $t('Brand.Manager') }}
+                    {{ $t('Product.Manager') }}
                 </h5>
 
                 <ElButton
                     type="primary"
                     :icon="ElIconPlus"
-                    @click="createDialog = true"
+                    @click="navigateTo(ROUTER.PRODUCT_CREATE)"
                 >
                     {{ $t('Btn.Create') }}
                 </ElButton>
@@ -55,19 +56,19 @@ const handleDelete = (id: string) => {
             <ElCol :span="24">
                 <ElTable
                     v-loading="isLoading"
-                    :data="brandTable"
+                    :data="productTable"
                     :empty-text="$t('Empty.NoData')"
                     border
                     class="w-full"
                     header-cell-class-name="uppercase text-xs"
                 >
                     <ElTableColumn
-                        :label="$t('Brand.Name')"
+                        :label="$t('Product.Name')"
                         min-width="250px"
                     >
-                        <template #default="scope: ITableColumn<IBrand>">
+                        <template #default="scope: ITableColumn<IProduct>">
                             <NuxtLink
-                                :to="`${ROUTER.BRAND}/${scope.row.id}`"
+                                :to="`${ROUTER.PRODUCT}/${scope.row.id}`"
                                 display="inline-block"
                             >
                                 <div
@@ -91,9 +92,8 @@ const handleDelete = (id: string) => {
                         :label="$t('Category.Index')"
                         min-width="250px"
                     >
-                        <template #default="scope: ITableColumn<IBrand>">
+                        <template #default="scope: ITableColumn<IProduct>">
                             <NuxtLink
-                                v-if="scope.row.Category"
                                 :to="`${ROUTER.CATEGORY}/${scope.row.Category.id}`"
                                 display="inline-block"
                             >
@@ -115,11 +115,38 @@ const handleDelete = (id: string) => {
                     </ElTableColumn>
 
                     <ElTableColumn
+                        :label="$t('Brand.Index')"
+                        min-width="250px"
+                    >
+                        <template #default="scope: ITableColumn<IProduct>">
+                            <NuxtLink
+                                v-if="scope.row.Brand"
+                                :to="`${ROUTER.BRAND}/${scope.row.Brand.id}`"
+                                display="inline-block"
+                            >
+                                <div
+                                    display="flex"
+                                    align="items-center"
+                                    grid="gap-3"
+                                >
+                                    <ElAvatar
+                                        fit="cover"
+                                        :size="40"
+                                        :src="getImageFile(pathBrand, scope.row.Brand.image_uri)"
+                                    />
+
+                                    <span text="capitalize blue-600">{{ scope.row.Brand.name }}</span>
+                                </div>
+                            </NuxtLink>
+                        </template>
+                    </ElTableColumn>
+
+                    <ElTableColumn
                         :label="$t('Status.Name')"
                         width="100px"
                         align="center"
                     >
-                        <template #default="scope: ITableColumn<IBrand>">
+                        <template #default="scope: ITableColumn<IProduct>">
                             <Component
                                 :is="valueTransform(optionStatus(), scope.row.status)?.icon"
                                 :class="valueTransform(optionStatus(), scope.row.status)?.class"
@@ -132,7 +159,7 @@ const handleDelete = (id: string) => {
                         width="100px"
                         align="center"
                     >
-                        <template #default="scope: ITableColumn<IBrand>">
+                        <template #default="scope: ITableColumn<IProduct>">
                             <Component
                                 :is="valueTransform(optionPopular(), scope.row.popular)?.icon"
                                 :class="valueTransform(optionPopular(), scope.row.popular)?.class"
@@ -144,17 +171,8 @@ const handleDelete = (id: string) => {
                         :label="$t('Created_at')"
                         width="180px"
                     >
-                        <template #default="scope: ITableColumn<IBrand>">
+                        <template #default="scope: ITableColumn<IProduct>">
                             {{ formatDateTime(scope.row.created_at) }}
-                        </template>
-                    </ElTableColumn>
-
-                    <ElTableColumn
-                        :label="$t('Updated_at')"
-                        width="180px"
-                    >
-                        <template #default="scope: ITableColumn<IBrand>">
-                            {{ formatDateTime(scope.row.updated_at) }}
                         </template>
                     </ElTableColumn>
 
@@ -162,12 +180,12 @@ const handleDelete = (id: string) => {
                         :label="$t('Action')"
                         width="110px"
                     >
-                        <template #default="scope: ITableColumn<IBrand>">
+                        <template #default="scope: ITableColumn<IProduct>">
                             <ElButton
                                 circle
                                 type="warning"
                                 :icon="ElIconEdit"
-                                @click="navigateTo(`${ROUTER.BRAND}/${scope.row.id}`)"
+                                @click="navigateTo(`${ROUTER.PRODUCT}/${scope.row.id}`)"
                             />
 
                             <ElButton
@@ -186,12 +204,10 @@ const handleDelete = (id: string) => {
                     background
                     layout="prev, pager, next"
                     :page-size="search.pageSize"
-                    :total="brandAggregations"
+                    :total="productAggregations"
                     @current-change="val => search.page = val"
                 />
             </ElCol>
         </ElRow>
-
-        <LazyBrandCreateForm v-model="createDialog" />
     </ElCard>
 </template>

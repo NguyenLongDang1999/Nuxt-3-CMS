@@ -9,7 +9,8 @@ const createDialog = ref<boolean>(false)
 
 // ** useHooks
 const { t } = useI18n()
-const { search, path } = useAttribute()
+const { search } = useAttribute()
+const { path: pathCategory } = useCategory()
 const { isLoading, attributeTable, attributeAggregations } = useAttributeTable()
 const { attributeDelete } = useAttributeDelete()
 
@@ -92,7 +93,7 @@ const handleDelete = (id: string) => {
                                     <ElAvatar
                                         fit="cover"
                                         :size="40"
-                                        :src="getImageFile(path, scope.row.Category.image_uri)"
+                                        :src="getImageFile(pathCategory, scope.row.Category.image_uri)"
                                     />
 
                                     <span text="capitalize blue-600">{{ scope.row.Category.name }}</span>

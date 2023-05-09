@@ -35,6 +35,17 @@ export interface ICategoryList {
     image_uri: string
 }
 
+export interface IBrandList {
+    id: string
+    name: string
+    image_uri: string
+}
+
+export interface IAttributeList {
+    id: string
+    name: string
+}
+
 export interface ITableColumn<T> {
     row: T
 }

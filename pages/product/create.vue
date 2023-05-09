@@ -4,15 +4,11 @@
         grid="gap-y-3"
     >
         <ElCol :span="24">
-            <LazyThePageTitle :title="$t('Product.Manager')" />
+            <LazyThePageTitle :title="$t('Product.Create')" />
         </ElCol>
 
         <ElCol :span="24">
-            <LazyProductSearchForm />
-        </ElCol>
-
-        <ElCol :span="24">
-            <LazyProductDataList />
+            <LazyProductCreateForm />
         </ElCol>
     </ElRow>
 </template>

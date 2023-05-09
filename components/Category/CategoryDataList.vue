@@ -66,7 +66,7 @@ const handleDelete = (id: string) => {
                     >
                         <template #default="scope: ITableColumn<ICategory>">
                             <NuxtLink
-                                :to="`/product/category/${scope.row.id}`"
+                                :to="`${ROUTER.CATEGORY}/${scope.row.id}`"
                                 display="inline-block"
                             >
                                 <div
@@ -93,7 +93,7 @@ const handleDelete = (id: string) => {
                         <template #default="scope: ITableColumn<ICategory>">
                             <NuxtLink
                                 v-if="scope.row.parentCategory"
-                                :to="`/product/category/${scope.row.parentCategory.id}`"
+                                :to="`${ROUTER.CATEGORY}/${scope.row.parentCategory.id}`"
                                 display="inline-block"
                             >
                                 <div

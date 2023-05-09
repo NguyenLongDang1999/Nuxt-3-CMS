@@ -13,15 +13,7 @@ export enum ROUTE {
     CATEGORY = 'category',
     BRAND = 'brand',
     ATTRIBUTE = 'attribute',
-}
-
-export enum ROUTER {
-    DASHBOARD = '/',
-    LOGIN = '/auth/login',
-    PRODUCT = '/product',
-    CATEGORY = '/product/category',
-    BRAND = '/product/brand',
-    ATTRIBUTE = '/product/attribute',
+    PRODUCT = 'product',
 }
 
 export enum FORMAT {
@@ -45,4 +37,27 @@ export enum IMAGE {
 export enum AUTH {
     TOKEN = 'accessToken',
     USER_DATA = 'userData',
+}
+
+// ----- ROUTER -----
+export enum ROUTER {
+
+    // ----- DASHBOARD -----
+    DASHBOARD = '/',
+
+    // ----- AUTH -----
+    LOGIN = '/auth/login',
+
+    // ----- PRODUCT -----
+    PRODUCT = '/product',
+    PRODUCT_CREATE = '/product/create',
+
+    // ----- BRAND -----
+    BRAND = '/product/brand',
+
+    // ----- CATEGORY -----
+    CATEGORY = '/product/category',
+
+    // ----- ATTRIBUTE -----
+    ATTRIBUTE = '/product/attribute',
 }

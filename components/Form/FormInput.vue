@@ -4,7 +4,7 @@
 interface Props {
     readonly name: string
     readonly title: string
-    modelValue?: string
+    modelValue?: string | number
 }
 
 interface Emits {

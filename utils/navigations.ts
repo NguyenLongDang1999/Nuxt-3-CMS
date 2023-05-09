@@ -58,6 +58,18 @@ export const constantRoutes: Menu.MenuOptions[] = [
                     title: 'Navigation.Attribute',
                     icon: 'ep:collection'
                 }
+            },
+            {
+                path: ROUTER.PRODUCT,
+                name: 'Product',
+                meta: {
+                    isAffix: false,
+                    isFull: false,
+                    isHide: true,
+                    isKeepAlive: true,
+                    title: 'Navigation.Product',
+                    icon: 'ep:handbag'
+                }
             }
         ]
     }

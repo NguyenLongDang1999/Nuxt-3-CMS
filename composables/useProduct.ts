@@ -6,80 +6,66 @@ import { _fetcher } from '~/configs/fetcher'
 
 // ** Types Imports
 import type { UploadRawFile } from 'element-plus'
-import type { IBrandFormInput, IBrandSearch, IBrandTable } from '~/types/brand.type'
-import type { IBrandList } from '~/types/core.type'
+import type { IProductFormInput, IProductSearch, IProductTable } from '~/types/product.type'
 
 // ** State
-const path = ref<string>(ROUTE.BRAND)
+const path = ref<string>(ROUTE.PRODUCT)
 
-const search = reactive<IBrandSearch>({
+const search = reactive<IProductSearch>({
     page: PAGE.CURRENT,
     pageSize: PAGE.SIZE
 })
 
-export const useBrand = () => {
+export const useProduct = () => {
     return {
         path,
         search
     }
 }
 
-export const useBrandList = () => {
+export const useProductTable = () => {
     // ** Hooks
-    const { data } = useQuery<IBrandList[]>({
-        queryKey: ['brandList'],
-        queryFn: () => _fetcher(`${path.value}/fetch-list`)
-    })
-
-    // ** Computed
-    const brandList = computed(() => data.value || [])
-
-    return { brandList }
-}
-
-export const useBrandTable = () => {
-    // ** Hooks
-    const { data, isLoading } = useQuery<IBrandTable>({
-        queryKey: ['brandTable', search],
+    const { data, isLoading } = useQuery<IProductTable>({
+        queryKey: ['productTable', search],
         queryFn: () => _fetcher(`${path.value}`, { params: search }),
         keepPreviousData: true
     })
 
     // ** Computed
-    const brandTable = computed(() => data.value?.data || [])
-    const brandAggregations = computed(() => data.value?.aggregations || 0)
+    const productTable = computed(() => data.value?.data || [])
+    const productAggregations = computed(() => data.value?.aggregations || 0)
 
     return {
         isLoading,
-        brandTable,
-        brandAggregations
+        productTable,
+        productAggregations
     }
 }
 
-export const useBrandDetail = (id: string) => {
+export const useProductDetail = (id: string) => {
     // ** Hooks
-    const { data, isLoading } = useQuery<IBrandFormInput>({
-        queryKey: ['brandDetail', id],
+    const { data, isLoading } = useQuery<IProductFormInput>({
+        queryKey: ['productDetail', id],
         queryFn: () => _fetcher(`${path.value}/${id}`)
     })
 
     // ** Computed
-    const brand = computed(() => data.value as IBrandFormInput)
+    const product = computed(() => data.value as IProductFormInput)
 
     return {
-        brand,
+        product,
         isLoading
     }
 }
 
-export const useBrandFormInput = (id?: string) => {
+export const useProductFormInput = (id?: string) => {
     // ** Hooks
     const { t } = useI18n()
     const { imageURL } = useUpload()
     const queryClient = useQueryClient()
 
-    const { isLoading, mutateAsync: brandFormInput } = useMutation(
-        async (body: IBrandFormInput) => {
+    const { isLoading, mutateAsync: productFormInput } = useMutation(
+        async (body: IProductFormInput) => {
             body.slug = slugify(body.name)
 
             if (!!imageURL.value) {
@@ -98,8 +84,8 @@ export const useBrandFormInput = (id?: string) => {
         },
         {
             onSuccess: () => {
-                queryClient.refetchQueries({ queryKey: ['brandTable'] })
-                if (id) queryClient.invalidateQueries({ queryKey: ['brandDetail', id] })
+                queryClient.refetchQueries({ queryKey: ['productTable'] })
+                if (id) queryClient.invalidateQueries({ queryKey: ['productDetail', id] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -116,20 +102,20 @@ export const useBrandFormInput = (id?: string) => {
 
     return {
         isLoading,
-        brandFormInput
+        productFormInput
     }
 }
 
-export const useBrandDelete = () => {
+export const useProductDelete = () => {
     // ** Hooks
     const { t } = useI18n()
     const queryClient = useQueryClient()
 
-    const { mutateAsync: brandDelete } = useMutation(
+    const { mutateAsync: productDelete } = useMutation(
         (id: string) => _fetcher(`${path.value}/delete/${id}`, { method: 'PATCH' }),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries({ queryKey: ['brandTable'] })
+                queryClient.invalidateQueries({ queryKey: ['productTable'] })
 
                 ElNotification({
                     title: t('Message.Title.Success'),
@@ -145,6 +131,6 @@ export const useBrandDelete = () => {
         })
 
     return {
-        brandDelete
+        productDelete
     }
 }
