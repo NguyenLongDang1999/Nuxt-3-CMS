@@ -20,8 +20,7 @@ const form = reactive<IProductFormInput>({
     price: 0,
     type_discount: DISCOUNT.PRICE,
     price_discount: 0,
-    attribute: [],
-    variant: []
+    attribute: []
 })
 
 // ** useHooks
@@ -29,7 +28,6 @@ const { t } = useI18n()
 const { brandList } = useBrandList()
 const { category_id } = useCategory()
 const { attribute_id } = useAttribute()
-const { variantList } = useVariantList()
 const { categoryList } = useCategoryList()
 const { attributeList } = useAttributeList()
 const { isLoading, productFormInput } = useProductFormInput()
@@ -37,7 +35,6 @@ const { isLoading, productFormInput } = useProductFormInput()
 // ** Watch
 watch(() => form.category_id, val => {
     category_id.value = val
-    form.variant = []
     form.attribute = []
     form.brand_id = undefined
 })
@@ -58,15 +55,19 @@ const handleCreate = (input?: FormInstance) => {
                         type: 'warning'
                     }
                 )
-                .then(() => productFormInput(form))
+                .then(() => {
+                    form.quantity = Number(form.quantity)
+                    form.price = Number(form.price)
+                    form.price_discount = Number(form.price_discount)
+
+                    productFormInput(form)
+                })
         }
     })
 }
 
 const handleAttributeChange = (val: IAttributeList[]) => {
     attribute_id.value = []
-
-    console.log(val)
 
     return val.map(item => attribute_id.value.push(item.id))
 }
@@ -241,11 +242,15 @@ const handleAttributeChange = (val: IAttributeList[]) => {
 
                         <ElCol :md="6">
                             <FormSelect
-                                v-model="form.variant[index]"
+                                v-model="form.attribute[index].variant"
                                 name="attribute_data"
                                 title="Variant.Value"
                                 multiple
-                                :options="variantList[index].data"
+                                filterable
+                                allow-create
+                                default-first-option
+                                :reserve-keyword="false"
+                                :options="[]"
                             />
                         </ElCol>
                     </ElRow>

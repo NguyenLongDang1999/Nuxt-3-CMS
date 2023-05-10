@@ -5,7 +5,7 @@ import AttributeValidate from '~~/validations/attribute.validate'
 
 // ** Types Imports
 import type { FormInstance } from 'element-plus'
-import type { IAttributeFormInput, IVariantItem } from '~/types/attribute.type'
+import type { IAttributeFormInput } from '~/types/attribute.type'
 
 // ** Props & Emits
 interface Props {
@@ -46,21 +46,6 @@ const handleUpdate = (input?: FormInstance) => {
                 .then(() => attributeFormInput(form))
         }
     })
-}
-
-const addVariant = () => {
-    form.Variations.push({
-        id: Date.now(),
-        name: ''
-    })
-}
-
-const removeVariant = (item: IVariantItem) => {
-    const index = form.Variations.indexOf(item)
-
-    if (index !== -1) {
-        form.Variations.splice(index, 1)
-    }
 }
 </script>
 
@@ -103,50 +88,6 @@ const removeVariant = (item: IVariantItem) => {
 
             <ElCol :md="24">
                 <ElDivider />
-            </ElCol>
-
-            <ElCol :md="24">
-                <ElButton
-                    plain
-                    type="primary"
-                    @click="addVariant"
-                >
-                    {{ $t('Variant.Add') }}
-                </ElButton>
-            </ElCol>
-
-            <ElCol :md="24">
-                <ElRow
-                    v-for="(variant, index) in form.Variations"
-                    :key="variant.id"
-                    :gutter="12"
-                    grid="gap-y-3"
-                    align="middle"
-                >
-                    <ElCol :span="10">
-                        <FormInput
-                            v-model="variant.name"
-                            :name="`Variations.${index}.name`"
-                            title="Variant.Value"
-                            :rules="{
-                                required: true,
-                                message: 'Gía trị thuộc tính không được bỏ trống.',
-                                trigger: 'change',
-                            }"
-                        />
-                    </ElCol>
-
-                    <ElCol :span="4">
-                        <ElButton
-                            circle
-                            plain
-                            type="danger"
-                            size="small"
-                            :icon="ElIconMinus"
-                            @click="removeVariant(variant)"
-                        />
-                    </ElCol>
-                </ElRow>
             </ElCol>
         </ElRow>
 

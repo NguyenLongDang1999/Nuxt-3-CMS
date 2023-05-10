@@ -103,24 +103,6 @@ const handleDelete = (id: string) => {
                     </ElTableColumn>
 
                     <ElTableColumn
-                        :label="$t('Variant.Value')"
-                        min-width="250px"
-                    >
-                        <template #default="scope: ITableColumn<IAttribute>">
-                            <div class="flex flex-wrap gap-2">
-                                <ElTag
-                                    v-for="(item, index) in scope.row.Variations"
-                                    :key="index"
-                                    effect="plain"
-                                    round
-                                >
-                                    {{ item.name }}
-                                </ElTag>
-                            </div>
-                        </template>
-                    </ElTableColumn>
-
-                    <ElTableColumn
                         :label="$t('Created_at')"
                         width="180px"
                     >

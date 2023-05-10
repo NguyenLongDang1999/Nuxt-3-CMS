@@ -27,13 +27,14 @@ export const useAttribute = () => {
 
 export const useAttributeList = () => {
     const { category_id } = useCategory()
-    const enabled = computed(() => !!category_id.value)
 
     // ** Hooks
     const { data } = useQuery<IAttributeList[]>({
         queryKey: ['attributeList', category_id],
-        queryFn: () => _fetcher(`${path.value}/fetch-list/${category_id.value}`),
-        enabled
+        queryFn: () => _fetcher(`${path.value}/fetch-list`, {
+            params: { id: category_id.value }
+        }),
+        enabled: computed(() => !!category_id.value)
     })
 
     // ** Computed
@@ -83,13 +84,9 @@ export const useAttributeFormInput = (id?: string) => {
     const queryClient = useQueryClient()
 
     const { isLoading, mutateAsync: attributeFormInput } = useMutation(
-        async (body: IAttributeFormInput) => {
-            body.slug = slugify(body.name)
-
-            return id ?
-                _fetcher(`${path.value}/${id}`, { method: 'PATCH', body }) :
-                _fetcher(`${path.value}`, { method: 'POST', body })
-        },
+        async (body: IAttributeFormInput) => id ?
+            _fetcher(`${path.value}/${id}`, { method: 'PATCH', body }) :
+            _fetcher(`${path.value}`, { method: 'POST', body }),
         {
             onSuccess: () => {
                 queryClient.refetchQueries({ queryKey: ['attributeTable'] })

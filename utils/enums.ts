@@ -18,7 +18,6 @@ export enum ROUTE {
     CATEGORY = 'category',
     BRAND = 'brand',
     ATTRIBUTE = 'attribute',
-    VARIANT = 'variant',
     PRODUCT = 'product',
 }
 

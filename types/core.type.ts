@@ -46,11 +46,11 @@ export interface IAttributeList {
     name: string
 }
 
-export interface ITableColumn<T> {
-    row: T
+export interface IProductAttribute extends IAttributeList {
+    variant: string
 }
 
-export interface IVariantList {
-    name: string
+export interface ITableColumn<T> {
+    row: T
 }
 
