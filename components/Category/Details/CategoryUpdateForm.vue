@@ -25,8 +25,8 @@ const { path } = useCategory()
 const { categoryList } = useCategoryList()
 const { isLoading, categoryFormInput } = useCategoryFormInput(props.id)
 
-// ** Watch
-watch(() => props.category, () => _assign(form, props.category))
+// ** onMounted
+onMounted(() => _assign(form, props.category))
 
 // ** Methods
 const handleUpdate = (input?: FormInstance) => {
