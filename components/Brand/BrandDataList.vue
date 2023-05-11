@@ -5,6 +5,7 @@ import type { IBrand } from '~/types/brand.type'
 import type { ITableColumn } from '~/types/core.type'
 
 // ** Data
+const input = ref('')
 const createDialog = ref<boolean>(false)
 
 // ** useHooks

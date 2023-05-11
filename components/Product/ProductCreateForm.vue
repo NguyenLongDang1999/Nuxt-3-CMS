@@ -5,7 +5,6 @@ import ProductValidate from '~~/validations/product.validate'
 
 // ** Types Imports
 import type { FormInstance } from 'element-plus'
-import type { IAttributeList } from '~/types/core.type'
 import type { IProductFormInput } from '~/types/product.type'
 
 // ** Data
@@ -20,14 +19,13 @@ const form = reactive<IProductFormInput>({
     price: 0,
     type_discount: DISCOUNT.PRICE,
     price_discount: 0,
-    attribute: []
+    ProductAttribute: []
 })
 
 // ** useHooks
 const { t } = useI18n()
 const { brandList } = useBrandList()
 const { category_id } = useCategory()
-const { attribute_id } = useAttribute()
 const { categoryList } = useCategoryList()
 const { attributeList } = useAttributeList()
 const { isLoading, productFormInput } = useProductFormInput()
@@ -35,7 +33,7 @@ const { isLoading, productFormInput } = useProductFormInput()
 // ** Watch
 watch(() => form.category_id, val => {
     category_id.value = val
-    form.attribute = []
+    form.ProductAttribute = []
     form.brand_id = undefined
 })
 
@@ -64,12 +62,6 @@ const handleCreate = (input?: FormInstance) => {
                 })
         }
     })
-}
-
-const handleAttributeChange = (val: IAttributeList[]) => {
-    attribute_id.value = []
-
-    return val.map(item => attribute_id.value.push(item.id))
 }
 </script>
 
@@ -159,6 +151,8 @@ const handleAttributeChange = (val: IAttributeList[]) => {
                         v-model="form.price"
                         name="price"
                         title="Product.Price"
+                        :formatter="(value: string) => `đ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                        :parser="(value: string) => value.replace(/\đ\s?|(,*)/g, '')"
                     />
                 </ElCol>
 
@@ -176,6 +170,8 @@ const handleAttributeChange = (val: IAttributeList[]) => {
                         v-model="form.price_discount"
                         name="price_discount"
                         title="Product.PriceDiscount"
+                        :formatter="(value: string) => `đ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+                        :parser="(value: string) => value.replace(/\đ\s?|(,*)/g, '')"
                     />
                 </ElCol>
 
@@ -213,20 +209,19 @@ const handleAttributeChange = (val: IAttributeList[]) => {
 
                 <ElCol :md="6">
                     <FormSelect
-                        v-model="form.attribute"
+                        v-model="form.ProductAttribute"
                         name="attribute_data"
                         title="Attribute.Index"
                         :options="attributeList"
                         multiple
                         value-arr
                         value-key="id"
-                        @change="handleAttributeChange"
                     />
                 </ElCol>
 
                 <ElCol :md="24">
                     <ElRow
-                        v-for="(item, index) in form.attribute"
+                        v-for="(item, index) in form.ProductAttribute"
                         :key="item.id"
                         :gutter="12"
                         grid="gap-y-3"
@@ -242,7 +237,7 @@ const handleAttributeChange = (val: IAttributeList[]) => {
 
                         <ElCol :md="6">
                             <FormSelect
-                                v-model="form.attribute[index].variant"
+                                v-model="form.ProductAttribute[index].variant"
                                 name="attribute_data"
                                 title="Variant.Value"
                                 multiple

@@ -42,7 +42,8 @@ export default {
         TypeDiscount: 'Loại giảm giá',
         PriceDiscount: 'Số tiền giảm giá',
         Sku: 'Mã sản phẩm',
-        Quantity: 'Số lượng'
+        Quantity: 'Số lượng',
+        InfoPrice: 'Thông tin giá cả'
     },
     Btn: {
         Create: 'Thêm Mới',

@@ -47,7 +47,8 @@ export interface IAttributeList {
 }
 
 export interface IProductAttribute extends IAttributeList {
-    variant: string
+    variant: string[]
+    Attributes?: IAttributeList
 }
 
 export interface ITableColumn<T> {

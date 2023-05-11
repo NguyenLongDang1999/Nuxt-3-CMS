@@ -82,7 +82,15 @@ const handleDelete = (id: string) => {
                                         :src="getImageFile(path, scope.row.image_uri)"
                                     />
 
-                                    <span text="capitalize blue-600">{{ scope.row.name }}</span>
+                                    <div>
+                                        <span text="capitalize blue-600">{{ scope.row.name }}</span>
+                                        <span
+                                            text="gray-400 xs"
+                                            display="block"
+                                        >
+                                            {{ scope.row.sku }}
+                                        </span>
+                                    </div>
                                 </div>
                             </NuxtLink>
                         </template>
@@ -90,7 +98,7 @@ const handleDelete = (id: string) => {
 
                     <ElTableColumn
                         :label="$t('Category.Index')"
-                        min-width="250px"
+                        min-width="200px"
                     >
                         <template #default="scope: ITableColumn<IProduct>">
                             <NuxtLink
@@ -116,7 +124,7 @@ const handleDelete = (id: string) => {
 
                     <ElTableColumn
                         :label="$t('Brand.Index')"
-                        min-width="250px"
+                        min-width="200px"
                     >
                         <template #default="scope: ITableColumn<IProduct>">
                             <NuxtLink
@@ -138,6 +146,39 @@ const handleDelete = (id: string) => {
                                     <span text="capitalize blue-600">{{ scope.row.Brand.name }}</span>
                                 </div>
                             </NuxtLink>
+                        </template>
+                    </ElTableColumn>
+
+                    <ElTableColumn
+                        :label="$t('Product.InfoPrice')"
+                        width="250px"
+                    >
+                        <template #default="scope: ITableColumn<IProduct>">
+                            <ul>
+                                <li>
+                                    <span
+                                        text="capitalize"
+                                        font="semibold"
+                                    >{{ $t('Product.TypeDiscount') }}: </span>
+                                    <span>{{ scope.row.type_discount }}</span>
+                                </li>
+
+                                <li>
+                                    <span
+                                        text="capitalize"
+                                        font="semibold"
+                                    >{{ $t('Product.PriceDiscount') }}: </span>
+                                    <span>{{ scope.row.price_discount }}</span>
+                                </li>
+
+                                <li>
+                                    <span
+                                        text="capitalize"
+                                        font="semibold"
+                                    >{{ $t('Product.Price') }}: </span>
+                                    <span>{{ scope.row.price }}</span>
+                                </li>
+                            </ul>
                         </template>
                     </ElTableColumn>
 

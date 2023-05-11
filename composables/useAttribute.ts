@@ -10,7 +10,6 @@ import type { IAttributeList } from '~/types/core.type'
 
 // ** State
 const path = ref<string>(ROUTE.ATTRIBUTE)
-const attribute_id = ref<string[]>([])
 
 const search = reactive<IAttributeSearch>({
     page: PAGE.CURRENT,
@@ -20,8 +19,7 @@ const search = reactive<IAttributeSearch>({
 export const useAttribute = () => {
     return {
         path,
-        search,
-        attribute_id
+        search
     }
 }
 
