@@ -5,7 +5,6 @@ import ProductValidate from '~~/validations/product.validate'
 
 // ** Types Imports
 import type { FormInstance } from 'element-plus'
-import type { IProductAttribute } from '~/types/core.type'
 import type { IProductFormInput } from '~/types/product.type'
 
 // ** Props & Emits
@@ -20,6 +19,10 @@ const props = defineProps<Props>()
 const formRef = ref<FormInstance>()
 const form = reactive<IProductFormInput>({ ...props.product })
 
+// ** Watch
+watch(() => form.category_id, val => category_id.value = val)
+watchEffect(() => _assign(form, props.product))
+
 // ** useHooks
 const { t } = useI18n()
 const { path } = useProduct()
@@ -28,31 +31,6 @@ const { category_id } = useCategory()
 const { categoryList } = useCategoryList()
 const { attributeList } = useAttributeList()
 const { isLoading, productFormInput } = useProductFormInput(props.id)
-
-// ** Watch
-watch(() => form.category_id, val => category_id.value = val)
-
-onMounted(() => {
-    _assign(form, props.product)
-
-    const productAttribute: IProductAttribute[]= []
-
-    form.ProductAttribute.forEach(item => {
-        const found = productAttribute.find(attr => attr.id === item.Attributes?.id)
-
-        if (found) {
-            found.variant.push(item.name)
-        } else {
-            productAttribute.push({
-                id: item.Attributes?.id as string,
-                name: item.Attributes?.name as string,
-                variant: [item.name]
-            })
-        }
-    })
-
-    form.ProductAttribute = productAttribute
-})
 
 // ** Methods
 const handleUpdate = (input?: FormInstance) => {
@@ -173,10 +151,11 @@ const handleCategoryChange = (val: string) => {
             </ElCol>
 
             <ElCol :md="6">
-                <FormInput
+                <FormCurrencyInput
                     v-model="form.price"
                     name="price"
                     title="Product.Price"
+                    :options="{ currency: 'VND' }"
                 />
             </ElCol>
 
@@ -190,10 +169,11 @@ const handleCategoryChange = (val: string) => {
             </ElCol>
 
             <ElCol :md="6">
-                <FormInput
+                <FormCurrencyInput
                     v-model="form.price_discount"
                     name="price_discount"
                     title="Product.PriceDiscount"
+                    :options="{ currency: 'VND' }"
                 />
             </ElCol>
 

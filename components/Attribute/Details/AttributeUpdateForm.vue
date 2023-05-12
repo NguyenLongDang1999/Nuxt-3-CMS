@@ -24,8 +24,8 @@ const { t } = useI18n()
 const { categoryList } = useCategoryList()
 const { isLoading, attributeFormInput } = useAttributeFormInput(props.id)
 
-// ** onMounted
-onMounted(() => _assign(form, props.attribute))
+// ** Watch
+watch(() => props.attribute, () => _assign(form, props.attribute))
 
 // ** Methods
 const handleUpdate = (input?: FormInstance) => {

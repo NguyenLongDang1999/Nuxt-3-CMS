@@ -147,12 +147,11 @@ const handleCreate = (input?: FormInstance) => {
                 </ElCol>
 
                 <ElCol :md="6">
-                    <FormInput
-                        v-model="form.price"
+                    <FormCurrencyInput
+                        v-model.lazy="form.price"
                         name="price"
                         title="Product.Price"
-                        :formatter="(value: string) => `đ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                        :parser="(value: string) => value.replace(/\đ\s?|(,*)/g, '')"
+                        :options="{ currency: 'VND' }"
                     />
                 </ElCol>
 
@@ -166,12 +165,11 @@ const handleCreate = (input?: FormInstance) => {
                 </ElCol>
 
                 <ElCol :md="6">
-                    <FormInput
-                        v-model="form.price_discount"
+                    <FormCurrencyInput
+                        v-model.lazy="form.price_discount"
                         name="price_discount"
                         title="Product.PriceDiscount"
-                        :formatter="(value: string) => `đ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-                        :parser="(value: string) => value.replace(/\đ\s?|(,*)/g, '')"
+                        :options="{ currency: 'VND' }"
                     />
                 </ElCol>
 

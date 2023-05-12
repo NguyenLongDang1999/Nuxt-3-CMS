@@ -25,8 +25,8 @@ const { path } = useBrand()
 const { categoryList } = useCategoryList()
 const { isLoading, brandFormInput } = useBrandFormInput(props.id)
 
-// ** onMounted
-onMounted(() => _assign(form, props.brand))
+// ** Watch
+watch(() => props.brand, () => _assign(form, props.brand))
 
 // ** Methods
 const handleUpdate = (input?: FormInstance) => {

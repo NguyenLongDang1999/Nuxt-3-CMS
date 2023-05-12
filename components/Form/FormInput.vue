@@ -8,7 +8,7 @@ interface Props {
 }
 
 interface Emits {
-    (event: 'update:modelValue', payload: string): void
+    (event: 'update:modelValue', payload: string | number): void
 }
 
 defineProps<Props>()

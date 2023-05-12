@@ -34,6 +34,7 @@
     "dependencies": {
         "@pinia/nuxt": "^0.4.9",
         "@tanstack/vue-query": "^4.29.5",
-        "@vueup/vue-quill": "^1.1.1"
+        "@vueup/vue-quill": "^1.1.1",
+        "vue-currency-input": "^3.0.4"
     }
 }
