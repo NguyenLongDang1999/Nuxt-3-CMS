@@ -21,7 +21,7 @@ const form = reactive<IProductFormInput>({ ...props.product })
 
 // ** Watch
 watch(() => form.category_id, val => category_id.value = val)
-watchEffect(() => _assign(form, props.product))
+watch(() => props.product, val => _assign(form, val))
 
 // ** useHooks
 const { t } = useI18n()
@@ -237,7 +237,7 @@ const handleCategoryChange = (val: string) => {
                         />
                     </ElCol>
 
-                    <ElCol :md="6">
+                    <ElCol :md="12">
                         <FormSelect
                             v-model="form.ProductAttribute[index].variant"
                             name="attribute_data"

@@ -25,7 +25,7 @@ const { product, isLoading } = useProductDetail(id)
                     v-loading="isLoading"
                     :label="$t('Information')"
                 >
-                    <ProductUpdateForm
+                    <LazyProductUpdateForm
                         :id="id"
                         :product="product"
                     />
