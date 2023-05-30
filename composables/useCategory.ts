@@ -88,7 +88,6 @@ export const useCategoryFormInput = (id?: string) => {
                 body.image_uri = body.slug + '.' + getExtensionFile(imageURL.value.name)
 
                 const uploadURL = `${path.value}/${body.image_uri}`
-                if (id) await useDeleteFile(uploadURL)
 
                 await useUploadFile(uploadURL, imageURL.value.raw as UploadRawFile)
             }

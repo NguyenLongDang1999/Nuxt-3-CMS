@@ -8,22 +8,16 @@ import { useCurrencyInput } from 'vue-currency-input'
 interface Props {
     readonly name: string
     readonly title: string
-    modelValue?: number
+    modelValue: number
     options: CurrencyInputOptions
 }
 
-// interface Emits {
-//     (event: 'update:modelValue', payload: number): void
-// }
-
 const props = defineProps<Props>()
-
-// const emits = defineEmits<Emits>()
 
 // ** Data
 const { inputRef, setOptions, setValue } = useCurrencyInput(props.options)
 
-watch(() => props.modelValue, val =>setValue(val || 0))
+watch(() => props.modelValue, val => setValue(val || 0))
 watch(() => props.options, options => setOptions(options))
 </script>
 
@@ -41,7 +35,7 @@ watch(() => props.options, options => setOptions(options))
         <ElInput
             :id="name"
             ref="inputRef"
-            :model-value="props.modelValue"
+            :model-value="modelValue"
             clearable
             v-bind="$attrs"
         />

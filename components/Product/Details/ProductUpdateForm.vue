@@ -237,7 +237,7 @@ const handleCategoryChange = (val: string) => {
                         />
                     </ElCol>
 
-                    <ElCol :md="6">
+                    <ElCol :md="12">
                         <FormSelect
                             v-model="form.ProductAttribute[index].variant"
                             name="attribute_data"

@@ -46,7 +46,8 @@ export const useProductDetail = (id: string) => {
     // ** Hooks
     const { data, isLoading } = useQuery<IProductFormInput>({
         queryKey: ['productDetail', id],
-        queryFn: () => _fetcher(`${path.value}/${id}`)
+        queryFn: () => _fetcher(`${path.value}/${id}`),
+        enabled: !!id
     })
 
     // ** Computed
