@@ -149,6 +149,7 @@ const handleDelete = (id: string) => {
                     layout="prev, pager, next"
                     :page-size="search.pageSize"
                     :total="attributeAggregations"
+                    :current-page="search.page"
                     @current-change="val => search.page = val"
                 />
             </ElCol>

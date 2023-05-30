@@ -48,23 +48,39 @@ export const formatDateTime = (date: string) => {
 
 export const getExtensionFile = (fileName: string) => fileName.split('.').pop()
 
-export const getImageFile = (path: string, name?: string) => name ? `${config.previewCDN}/${path}/${name}` : IMAGE.DEFAULT
+export const getImageFile = (path: string, name?: string) => {
+    if (name) {
+        return name.includes('https://') ?
+            name :
+            `${config.previewCDN}/${path}/${name}`
+    }
+
+    return IMAGE.DEFAULT
+}
 
 export const valueTransform = (dataList: IOptions[], value: string | number) => useArrayFind(dataList, val => val.id === value).value
 
 export const slugify = (str: string) => {
-    str = str.toLowerCase()
-    str = str.replace(/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/g, 'a')
-    str = str.replace(/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/g, 'e')
-    str = str.replace(/(ì|í|ị|ỉ|ĩ)/g, 'i')
-    str = str.replace(/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/g, 'o')
-    str = str.replace(/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/g, 'u')
-    str = str.replace(/(ỳ|ý|ỵ|ỷ|ỹ)/g, 'y')
-    str = str.replace(/(đ)/g, 'd')
+    const map: { [key: string]: string } = {
+        a: 'à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ',
+        e: 'è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ',
+        i: 'ì|í|ị|ỉ|ĩ',
+        o: 'ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ',
+        u: 'ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ',
+        y: 'ỳ|ý|ỵ|ỷ|ỹ',
+        d: 'đ'
+    }
+
+    for (const key in map) {
+        str = str.replace(new RegExp(map[key], 'g'), key)
+    }
+
     str = str.replace(/([^0-9a-z-\s])/g, '')
-    str = str.replace(/(\s+)/g, '-')
-    str = str.replace(/^-+/g, '')
-    str = str.replace(/-+$/g, '')
+        .replace(/[\s]+/g, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-+|-+$/g, '')
+
+    return str.toLowerCase()
 
     return str
 }
